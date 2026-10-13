@@ -34,15 +34,19 @@ jobs:
           cp manifest.json android/app/src/main/assets/
           cp sw.js android/app/src/main/assets/ || true
 
-      - name: Grant Execute Permission for Gradlew
-        run: |
-          cd android
-          chmod +x gradlew || true
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build Android APK with Gradle
         run: |
           cd android
-          gradle assembleDebug --stacktrace
+          gradle wrapper || true
+          if [ -f "./gradlew" ]; then
+            chmod +x ./gradlew
+            ./gradlew assembleDebug --stacktrace
+          else
+            gradle assembleDebug --stacktrace
+          fi
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
