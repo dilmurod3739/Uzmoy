@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UZMOY — Zamonaviy Online Avtomoyka va Detailing Xizmati</title>
+  <meta name="description" content="O'zbekistonda birinchi professional onlayn avtomoyka platformasi. Sayyor va stasionar moyka, jonli navbat, universal xizmatlar va qulay to'lov.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00e5ff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- Leaflet CSS for Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo" id="logoBtn">
+        <div class="logo-icon-wrap">
+          <i class="fa-solid fa-droplet logo-icon"></i>
+          <span class="pulse-ring"></span>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">UZ<span>MOY</span></span>
+          <span class="logo-tagline">SMART CAR WASH & DETAILING</span>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="#services-section" class="nav-link active"><i class="fa-solid fa-car-wash"></i> Xizmatlar & Narxlar</a>
+        <a href="#booking-section" class="nav-link"><i class="fa-solid fa-calendar-check"></i> Buyurtma Berish</a>
+        <a href="#location-section" class="nav-link"><i class="fa-solid fa-location-dot"></i> Lokatsiya & Sayyor</a>
+        <a href="#queue-section" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Jonli Navbat</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="live-status-pill">
+          <span class="status-dot"></span>
+          <span class="status-text">Xizmat ochiq • 24/7</span>
+        </div>
+        <button class="btn btn-primary btn-sm" id="quickBookBtn">
+          <i class="fa-solid fa-bolt"></i> Tezkor Bron
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="badge-hero">
+          <i class="fa-solid fa-shield-halved"></i> 100% Kafolatlangan Premium Sifat & Tezkor Xizmat
+        </div>
+        <h1 class="hero-title">
+          Avtomobilingiz Uchun <br>
+          <span class="gradient-text">Oliy Toifali Online Moyka</span>
+        </h1>
+        <p class="hero-subtitle">
+          Sayyor moyka buyurtma bering (biz sizning oldingizga boramiz) yoki eng yaqin filialimizga jonli navbat bilan keling. 
+          250 000 so'mdan 300$ gacha bo'lgan to'liq detailing, sertifikatlangan ustalar jamoasi va shaffof to'lov tizimlari.
+        </p>
+
+        <!-- Live Quick Stats Bar -->
+        <div class="quick-stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <div class="stat-info">
+              <span class="stat-val" id="activeStaffCount">2-6 nafar</span>
+              <span class="stat-lbl">Har bir tarifda ustalar guruhi</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-van-shuttle"></i></div>
+            <div class="stat-info">
+              <span class="stat-val">15-30 daqiqa</span>
+              <span class="stat-lbl">Sayyor moyka yetib borish vaqti</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="stat-info">
+              <span class="stat-val">Uzum, Payme, Click</span>
+              <span class="stat-lbl">Humo, Uzcard, Visa & Naqd</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#booking-section" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-calendar-plus"></i> Navbatga Yozilish
+          </a>
+          <a href="#services-section" class="btn btn-outline btn-lg">
+            <i class="fa-solid fa-list-check"></i> Narxlar & Bosqichlar
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Visual Interactive Card Preview -->
+      <div class="hero-visual">
+        <div class="glass-card hero-preview-card">
+          <div class="preview-header">
+            <div class="preview-dot-group">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="preview-chip"><i class="fa-solid fa-satellite-dish"></i> Jonli Tizim</span>
+          </div>
+
+          <!-- Mini Car Plate Visualizer in Hero -->
+          <div class="hero-plate-box">
+            <span class="box-label">Avtomobil Davlat Raqami:</span>
+            <div class="uzb-plate mini-plate">
+              <div class="plate-flag-col">
+                <span class="plate-code" id="heroPlateRegion">01</span>
+                <span class="plate-flag-strip">🇺🇿</span>
+              </div>
+              <div class="plate-number" id="heroPlateNumber">777 AAA</div>
+            </div>
+          </div>
+
+          <div class="live-queue-preview">
+            <div class="queue-row">
+              <span>Hozirgi navbatda:</span>
+              <strong class="highlight-cyan" id="heroQueueCount">2 ta avtomobil</strong>
+            </div>
+            <div class="queue-row">
+              <span>Taxminiy kutilish:</span>
+              <strong class="highlight-gold" id="heroWaitTime">~18 daqiqa</strong>
+            </div>
+            <div class="queue-row">
+              <span>Tanlangan xizmat:</span>
+              <span class="badge-service" id="heroSelectedService">Kompleks Premium</span>
+            </div>
+          </div>
+
+          <div class="preview-workers-preview">
+            <div class="workers-header">
+              <span><i class="fa-solid fa-user-check"></i> Xizmat ko'rsatuvchi xodimlar:</span>
+              <strong id="heroWorkerBadge">3 nafar mutaxassis</strong>
+            </div>
+            <div class="worker-avatars" id="heroWorkerAvatars">
+              <span class="worker-avatar" title="Katta usta"><i class="fa-solid fa-user-ninja"></i></span>
+              <span class="worker-avatar" title="Salon tozalash ustasi"><i class="fa-solid fa-user-shield"></i></span>
+              <span class="worker-avatar" title="Quritish & Fen mutaxassisi"><i class="fa-solid fa-user-gear"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services & Pricing Section -->
+    <section class="section" id="services-section">
+      <div class="section-header text-center">
+        <div class="section-badge"><i class="fa-solid fa-tags"></i> Shaffof Tariflar & Jarayonlar</div>
+        <h2 class="section-title">Universal Moyka Xizmatlari & Aniq Narxlar</h2>
+        <p class="section-desc">
+          Har bir narx toifasi bo'yicha avtomobilingiz qanday texnologiya bilan yuvilishi va necha nafar usta xizmat ko'rsatishi bilan tanishing.
+        </p>
+      </div>
+
+      <!-- Pricing Tier Cards Grid -->
+      <div class="pricing-grid" id="pricingGrid">
+        <!-- 250,000 UZS Tier -->
+        <div class="pricing-card" data-package="tier1" data-price="250000" data-currency="UZS">
+          <div class="pricing-header">
+            <div class="tier-tag">1-Toifa • Boshlang'ich</div>
+            <h3 class="tier-name">Standart Ekspress</h3>
+            <div class="tier-price">
+              <span class="amount">250 000</span>
+              <span class="currency">so'm</span>
+            </div>
+            <p class="tier-sub">Kundalik parvarish va tezkor tozalik uchun</p>
+          </div>
+
+          <div class="tier-meta">
+            <div class="meta-item">
+              <i class="fa-solid fa-users text-cyan"></i>
+              <span><strong>2 nafar</strong> usta xizmat ko'rsatadi</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa-solid fa-stopwatch text-gold"></i>
+              <span>Vaqti: <strong>35-45 daqiqa</strong></span>
+            </div>
+          </div>
+
+          <div class="wash-process-box">
+            <div class="process-title"><i class="fa-solid fa-list-check"></i> Qanday yuviladi (Jarayon):</div>
+            <ul class="process-steps">
+              <li><i class="fa-solid fa-check"></i> <strong>1-bosqich:</strong> Yuqori bosimli suv bilan birlamchi changni urdirish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2-bosqich:</strong> Kontaktsiz pH-neytral faol ko'pik sepish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>3-bosqich:</strong> G'ildirak arkalari va disklar kirlarini yuvish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>4-bosqich:</strong> Mikrofibra sochiqlar va turbo-fen bilan quritish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>5-bosqich:</strong> Salon gilamchalarini yuvish va panel changini artish</li>
+            </ul>
+          </div>
+
+          <button class="btn btn-outline select-package-btn" onclick="selectPackage('tier1')">
+            Ushbu Tarifni Tanlash
+          </button>
+        </div>
+
+        <!-- 500,000 UZS Tier (Popular) -->
+        <div class="pricing-card featured" data-package="tier2" data-price="500000" data-currency="UZS">
+          <div class="featured-badge"><i class="fa-solid fa-fire"></i> Eng Ko'p Tanlanadigan</div>
+          <div class="pricing-header">
+            <div class="tier-tag">2-Toifa • Ommabop</div>
+            <h3 class="tier-name">Kompleks Premium</h3>
+            <div class="tier-price">
+              <span class="amount">500 000</span>
+              <span class="currency">so'm</span>
+            </div>
+            <p class="tier-sub">Kuzov va salonning to'liq chuqur tozaligi</p>
+          </div>
+
+          <div class="tier-meta">
+            <div class="meta-item">
+              <i class="fa-solid fa-users text-cyan"></i>
+              <span><strong>3 nafar</strong> tajribali mutaxassis</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa-solid fa-stopwatch text-gold"></i>
+              <span>Vaqti: <strong>1 soat 15 daqiqa</strong></span>
+            </div>
+          </div>
+
+          <div class="wash-process-box">
+            <div class="process-title"><i class="fa-solid fa-list-check"></i> Qanday yuviladi (Jarayon):</div>
+            <ul class="process-steps">
+              <li><i class="fa-solid fa-check"></i> <strong>1-bosqich:</strong> 2 bosqichli nano-ko'pik bilan ehtiyotkor yuvish (2-Bucket metod)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2-bosqich:</strong> Avtomobil ostki qismi (dnishche) yuvilishi</li>
+              <li><i class="fa-solid fa-check"></i> <strong>3-bosqich:</strong> Shinalar qoraytirgichi (Tire Dressing) va disklar jilosi</li>
+              <li><i class="fa-solid fa-check"></i> <strong>4-bosqich:</strong> Salon va bagajni to'liq 3 motorli changyutkich qilish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>5-bosqich:</strong> Plastik detallarga antistatik konditsioner surtish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>6-bosqich:</strong> Barcha ichki/tashqi oynalarni spirtli eritma bilan tozalash</li>
+            </ul>
+          </div>
+
+          <button class="btn btn-primary select-package-btn" onclick="selectPackage('tier2')">
+            Ushbu Tarifni Tanlash
+          </button>
+        </div>
+
+        <!-- 800,000 UZS Tier -->
+        <div class="pricing-card" data-package="tier3" data-price="800000" data-currency="UZS">
+          <div class="pricing-header">
+            <div class="tier-tag">3-Toifa • VIP Tozalash</div>
+            <h3 class="tier-name">VIP Detailing Yuvish</h3>
+            <div class="tier-price">
+              <span class="amount">800 000</span>
+              <span class="currency">so'm</span>
+            </div>
+            <p class="tier-sub">Bitum, smola tozalash va dvigatelni bug'lash</p>
+          </div>
+
+          <div class="tier-meta">
+            <div class="meta-item">
+              <i class="fa-solid fa-users text-cyan"></i>
+              <span><strong>4 nafar</strong> professional usta</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa-solid fa-stopwatch text-gold"></i>
+              <span>Vaqti: <strong>2 soat 30 daqiqa</strong></span>
+            </div>
+          </div>
+
+          <div class="wash-process-box">
+            <div class="process-title"><i class="fa-solid fa-list-check"></i> Qanday yuviladi (Jarayon):</div>
+            <ul class="process-steps">
+              <li><i class="fa-solid fa-check"></i> <strong>1-bosqich:</strong> 3 bosqichli deteyling yuvish (Pre-wash + Shampun + Kislorod)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2-bosqich:</strong> Bitum, daraxt shirasi va qatronlarni maxsus kimyo bilan eritish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>3-bosqich:</strong> Gil g'ovak (Clay Bar) bilan lak yuzasidagi kirlarni yulish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>4-bosqich:</strong> Dvigatel bo'limini xavfsiz quruq bug' bilan yuvish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>5-bosqich:</strong> Teri o'rindiqlarni premium Italiya kremlari bilan oziqlantirish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>6-bosqich:</strong> Salonni ozon generatori bilan 100% dezinfeksiya qilish</li>
+            </ul>
+          </div>
+
+          <button class="btn btn-outline select-package-btn" onclick="selectPackage('tier3')">
+            Ushbu Tarifni Tanlash
+          </button>
+        </div>
+
+        <!-- 100$ (~1,300,000 UZS) Tier -->
+        <div class="pricing-card" data-package="tier4" data-price="1300000" data-price-usd="100" data-currency="USD">
+          <div class="pricing-header">
+            <div class="tier-tag gold-tag">4-Toifa • Polirovka & Himoya</div>
+            <h3 class="tier-name">Ultra Pro & Nano-Himoya</h3>
+            <div class="tier-price">
+              <span class="amount">100 $</span>
+              <span class="currency">(~1 300 000 so'm)</span>
+            </div>
+            <p class="tier-sub">1 bosqichli polirovka, nano-keramika va chuqur himchistka</p>
+          </div>
+
+          <div class="tier-meta">
+            <div class="meta-item">
+              <i class="fa-solid fa-users text-cyan"></i>
+              <span><strong>5 nafar</strong> oliy toifali usta</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa-solid fa-stopwatch text-gold"></i>
+              <span>Vaqti: <strong>4-5 soat</strong></span>
+            </div>
+          </div>
+
+          <div class="wash-process-box">
+            <div class="process-title"><i class="fa-solid fa-list-check"></i> Qanday yuviladi (Jarayon):</div>
+            <ul class="process-steps">
+              <li><i class="fa-solid fa-check"></i> <strong>1-bosqich:</strong> To'liq deteyling dekontaminatsiya va temir kukunini yuvish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2-bosqich:</strong> Salondagi barcha mato/teri qismlarni ekstraktorli chuqur kimyoviy yuvish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>3-bosqich:</strong> 1 bosqichli yengil abraziv polirovka (mikro-tirnalishlar ketadi)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>4-bosqich:</strong> 6 oylik gidrofob nano-keramik kvars himoya qatlami surtish</li>
+              <li><i class="fa-solid fa-check"></i> <strong>5-bosqich:</strong> Old va yon oynalarga "Antidojd" (yomg'irga qarshi) qoplamasi</li>
+              <li><i class="fa-solid fa-check"></i> <strong>6-bosqich:</strong> Tormoz supportlari va disklarga keramik himoya</li>
+            </ul>
+          </div>
+
+          <button class="btn btn-outline select-package-btn" onclick="selectPackage('tier4')">
+            Ushbu Tarifni Tanlash
+          </button>
+        </div>
+
+        <!-- 300$ (~3,900,000 UZS) Tier -->
+        <div class="pricing-card royal" data-package="tier5" data-price="3900000" data-price-usd="300" data-currency="USD">
+          <div class="royal-badge"><i class="fa-solid fa-crown"></i> Qirollik Darajasi</div>
+          <div class="pricing-header">
+            <div class="tier-tag purple-tag">5-Toifa • Maksimal Detailing</div>
+            <h3 class="tier-name">Prezident Royal 9H</h3>
+            <div class="tier-price">
+              <span class="amount">300 $</span>
+              <span class="currency">(~3 900 000 so'm)</span>
+            </div>
+            <p class="tier-sub">3 qatlamli 9H Keramika, 3 bosqichli polirovka & restavratsiya</p>
+          </div>
+
+          <div class="tier-meta">
+            <div class="meta-item">
+              <i class="fa-solid fa-users text-cyan"></i>
+              <span><strong>6 nafar</strong> sertifikatlangan deteyling masteri</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa-solid fa-stopwatch text-gold"></i>
+              <span>Vaqti: <strong>8-12 soat (To'liq kun)</strong></span>
+            </div>
+          </div>
+
+          <div class="wash-process-box">
+            <div class="process-title"><i class="fa-solid fa-list-check"></i> Qanday yuviladi (Jarayon):</div>
+            <ul class="process-steps">
+              <li><i class="fa-solid fa-check"></i> <strong>1-bosqich:</strong> Mikroskopik chuqurlikdagi to'liq ko'p bosqichli tozalash</li>
+              <li><i class="fa-solid fa-check"></i> <strong>2-bosqich:</strong> Salonning har bir millimetrini chuqur tozalash (shift, pol, eshiklar, alkantara)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>3-bosqich:</strong> 3 bosqichli mukammal oyna polirovkasi (Mirror Finish, 95%+ tirnalish ketadi)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>4-bosqich:</strong> Haqiqiy 3 qavat 9H qattiqlikdagi Keramik qoplama (3 yil kafolat)</li>
+              <li><i class="fa-solid fa-check"></i> <strong>5-bosqich:</strong> Dvigatelni dielektrik tozalash va maxsus himoya laki</li>
+              <li><i class="fa-solid fa-check"></i> <strong>6-bosqich:</strong> Barcha salon teri qismlariga keramik himoya + Detailing sovg'a to'plami</li>
+            </ul>
+          </div>
+
+          <button class="btn btn-royal select-package-btn" onclick="selectPackage('tier5')">
+            Ushbu Tarifni Tanlash
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking, Car Information & Queue Section -->
+    <section class="section" id="booking-section">
+      <div class="section-header text-center">
+        <div class="section-badge"><i class="fa-solid fa-car"></i> Onlayn Ro'yxatdan O'tish</div>
+        <h2 class="section-title">Buyurtma Berish & Mashina Ma'lumotlari</h2>
+        <p class="section-desc">
+          Mashina turini, davlat raqamini, telefoningizni kiriting va xizmat usulini (sayyor moyka yoki filial) tanlang.
+        </p>
+      </div>
+
+      <div class="booking-layout">
+        <!-- Form Container -->
+        <div class="booking-form-card glass-card">
+          <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+            
+            <!-- Step 1: Car Category -->
+            <div class="form-step-block">
+              <div class="step-title">
+                <span class="step-num">1</span>
+                <div>
+                  <h4>Avtomobil Turini Tanlang</h4>
+                  <small>Kuzov turiga qarab xizmat uslubi belgilanadi</small>
+                </div>
+              </div>
+
+              <div class="car-types-grid" id="carTypesContainer">
+                <label class="car-type-option active">
+                  <input type="radio" name="carType" value="sedan" checked onchange="updateCarType('sedan', 'Sedan / Xetchbek', 1.0)">
+                  <div class="car-type-card">
+                    <i class="fa-solid fa-car-side"></i>
+                    <span class="car-name">Sedan / Xetchbek</span>
+                    <span class="car-examples">Cobalt, Gentra, Malibu, Elantra</span>
+                  </div>
+                </label>
+
+                <label class="car-type-option">
+                  <input type="radio" name="carType" value="crossover" onchange="updateCarType('crossover', 'Krossover / SUV', 1.15)">
+                  <div class="car-type-card">
+                    <i class="fa-solid fa-truck-monster"></i>
+                    <span class="car-name">Krossover / SUV</span>
+                    <span class="car-examples">Tracker, Captiva, Santa Fe</span>
+                  </div>
+                </label>
+
+                <label class="car-type-option">
+                  <input type="radio" name="carType" value="jeep" onchange="updateCarType('jeep', 'Katta Djip / Offroad', 1.25)">
+                  <div class="car-type-card">
+                    <i class="fa-solid fa-truck-pickup"></i>
+                    <span class="car-name">Katta Djip / Off-Road</span>
+                    <span class="car-examples">Tahoe, Prado, Land Cruiser</span>
+                  </div>
+                </label>
+
+                <label class="car-type-option">
+                  <input type="radio" name="carType" value="minivan" onchange="updateCarType('minivan', 'Miniven / Mikroavtobus', 1.3)">
+                  <div class="car-type-card">
+                    <i class="fa-solid fa-van-shuttle"></i>
+                    <span class="car-name">Miniven / Furgon</span>
+                    <span class="car-examples">Damas, Staria, Carnival</span>
+                  </div>
+                </label>
+
+                <label class="car-type-option">
+                  <input type="radio" name="carType" value="premium" onchange="updateCarType('premium', 'Premium / Superkar', 1.2)">
+                  <div class="car-type-card">
+                    <i class="fa-solid fa-gem"></i>
+                    <span class="car-name">Premium / Elektromobil</span>
+                    <span class="car-examples">BYD, Zeekr, Li Auto, Porsche</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Step 2: Car Brand, Plate, Phone & Name -->
+            <div class="form-step-block">
+              <div class="step-title">
+                <span class="step-num">2</span>
+                <div>
+                  <h4>Avtomobil & Aloqa Ma'lumotlari</h4>
+                  <small>Davlat raqami va telefon raqamingizni aniq kiriting</small>
+                </div>
+              </div>
+
+              <div class="form-fields-grid">
+                <!-- Car Brand & Model -->
+                <div class="form-group">
+                  <label for="carModelInput"><i class="fa-solid fa-car"></i> Mashina Rusumi va Modeli:</label>
+                  <input type="text" id="carModelInput" class="form-control" placeholder="Masalan: Chevrolet Malibu 2 yoki BYD Song Plus" required value="Chevrolet Gentra">
+                </div>
+
+                <!-- Customer Name -->
+                <div class="form-group">
+                  <label for="clientNameInput"><i class="fa-solid fa-user"></i> Ismingiz:</label>
+                  <input type="text" id="clientNameInput" class="form-control" placeholder="Ismingizni kiriting" required value="Sardor Rahimov">
+                </div>
+
+                <!-- Car Plate Input -->
+                <div class="form-group">
+                  <label for="plateRegionInput"><i class="fa-solid fa-id-card"></i> Avtomobil Davlat Raqami:</label>
+                  <div class="plate-input-wrapper">
+                    <input type="text" id="plateRegionInput" class="form-control plate-reg-input" maxlength="2" placeholder="01" value="01" required>
+                    <input type="text" id="plateSeriesInput" class="form-control plate-series-input" maxlength="7" placeholder="A 777 AA" value="A 777 AA" required>
+                  </div>
+                  <span class="input-hint">Shahar kodi (01-95) va harf-raqamlar kombinatsiyasi</span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                  <label for="phoneInput"><i class="fa-solid fa-phone"></i> Telefon Raqamingiz:</label>
+                  <div class="phone-input-wrapper">
+                    <span class="phone-prefix">+998</span>
+                    <input type="tel" id="phoneInput" class="form-control phone-input" placeholder="90 123 45 67" maxlength="12" required value="90 123 45 67">
+                  </div>
+                  <span class="input-hint">Buyurtma holati SMS orqali yuboriladi</span>
+                </div>
+              </div>
+
+              <!-- Interactive License Plate Visualizer -->
+              <div class="plate-preview-container">
+                <div class="plate-preview-title">Jonli Davlat Raqami Ko'rinishi:</div>
+                <div class="uzb-plate full-plate" id="livePlateElement">
+                  <div class="plate-flag-col">
+                    <span class="plate-code" id="previewRegion">01</span>
+                    <span class="plate-flag-strip">🇺🇿</span>
+                  </div>
+                  <div class="plate-number" id="previewSeries">A 777 AA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Service Mode (Sayyor vs Stasionar) & Location -->
+            <div class="form-step-block" id="location-section">
+              <div class="step-title">
+                <span class="step-num">3</span>
+                <div>
+                  <h4>Xizmat Ko'rsatish Usuli & Lokatsiya</h4>
+                  <small>Sayyor moyka chaqirasizmi yoki filialimizga kelasizmi?</small>
+                </div>
+              </div>
+
+              <div class="service-mode-selector">
+                <label class="mode-tab active" id="tabMobileWash">
+                  <input type="radio" name="serviceMode" value="mobile" checked onchange="toggleServiceMode('mobile')">
+                  <div class="mode-content">
+                    <i class="fa-solid fa-van-shuttle mode-icon"></i>
+                    <div>
+                      <strong>Sayyor Moyka (Moyka Sizga Boradi)</strong>
+                      <p>Manzilingizga jihozlangan maxsus avto-ekipaj boradi</p>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="mode-tab" id="tabStationWash">
+                  <input type="radio" name="serviceMode" value="station" onchange="toggleServiceMode('station')">
+                  <div class="mode-content">
+                    <i class="fa-solid fa-building-flag mode-icon"></i>
+                    <div>
+                      <strong>Filialga Borish (Stasionar Moyka)</strong>
+                      <p>Eng yaqin filialimizga jonli navbat bilan borasiz</p>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Location Details -->
+              <div class="location-details-box" id="mobileLocationBox">
+                <div class="form-group">
+                  <label><i class="fa-solid fa-map-location-dot"></i> Sizning Manzilingiz / Lokatsiyangiz:</label>
+                  <div class="address-input-bar">
+                    <input type="text" id="userAddressInput" class="form-control" placeholder="Masalan: Toshkent sh., Chilonzor 9-mavze, 14-uy oldida" value="Toshkent sh., Yunusobod tumani, Amir Temur shox ko'chasi 45">
+                    <button type="button" class="btn btn-outline" id="detectGpsBtn" onclick="detectUserLocation()">
+                      <i class="fa-solid fa-crosshairs"></i> GPS Aniqlash
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Interactive Map Container -->
+                <div class="map-wrapper">
+                  <div class="map-header">
+                    <span><i class="fa-solid fa-compass"></i> Xaritada joylashuvni belgilang:</span>
+                    <span class="map-coords" id="coordsDisplay">Toshkent (41.3111° N, 69.2797° E)</span>
+                  </div>
+                  <div id="interactiveMap" class="map-element"></div>
+                  <div class="map-hint">
+                    <i class="fa-solid fa-circle-info"></i> Xaritani siljitib yoki bosib, mashinangiz turgan aniq nuqtani ko'rsating.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stationary Branch Selection (hidden by default) -->
+              <div class="station-branch-box" id="stationBranchBox" style="display: none;">
+                <div class="form-group">
+                  <label><i class="fa-solid fa-shop"></i> Eng yaqin filialimizni tanlang:</label>
+                  <select id="branchSelect" class="form-control" onchange="handleBranchChange()">
+                    <option value="amir_temur">🏢 1-Filial: Amir Temur filiali (Yunusobod markazi)</option>
+                    <option value="chilonzor">🏢 2-Filial: Chilonzor Detailing Markazi (Qatortol)</option>
+                    <option value="sergeli">🏢 3-Filial: Sergeli Yangi Hayot Mega-Moyka</option>
+                    <option value="mirzo_ulugbek">🏢 4-Filial: Mirzo Ulug'bek (Buyuk Ipak Yo'li)</option>
+                  </select>
+                </div>
+                <div class="branch-info-card" id="branchInfoCard">
+                  <div class="branch-address"><i class="fa-solid fa-location-dot text-cyan"></i> <span>Toshkent sh., Amir Temur shox ko'chasi 107B</span></div>
+                  <div class="branch-queue-now"><i class="fa-solid fa-car-tunnel text-gold"></i> <span>Hozirda bokslarda: <strong>4 ta mashina</strong> | Kutilish: <strong>~15 min</strong></span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Queue & Booking Slot (Jonli Navbat) -->
+            <div class="form-step-block" id="queue-section">
+              <div class="step-title">
+                <span class="step-num">4</span>
+                <div>
+                  <h4>Navbat & Vaqtni Tanlash</h4>
+                  <small>Hozirgi ochiritka qarab darhol yoki belgilangan soatga yoziling</small>
+                </div>
+              </div>
+
+              <div class="queue-choice-cards">
+                <label class="queue-option-card active">
+                  <input type="radio" name="queueMode" value="immediate" checked onchange="toggleQueueMode('immediate')">
+                  <div class="queue-card-inner">
+                    <div class="qc-header">
+                      <i class="fa-solid fa-bolt-lightning text-gold"></i>
+                      <strong>Hozirgi Jonli Navbatga Kirish</strong>
+                    </div>
+                    <p>Mavjud birinchi bo'sh boks yoki eng tez yetib boruvchi sayyor ekipajga yozilish.</p>
+                    <div class="qc-status">
+                      <span>Sizdan oldin: <strong class="text-cyan" id="queueBeforeCount">2 ta avtomobil</strong></span>
+                      <span>Kutish: <strong class="text-gold" id="queueWaitMins">~18 daqiqa</strong></span>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="queue-option-card">
+                  <input type="radio" name="queueMode" value="scheduled" onchange="toggleQueueMode('scheduled')">
+                  <div class="queue-card-inner">
+                    <div class="qc-header">
+                      <i class="fa-solid fa-clock text-cyan"></i>
+                      <strong>Oldindan Vaqt Tanlash (Bron)</strong>
+                    </div>
+                    <p>O'zingizga qulay kun va soatni tanlang, navbatsiz qabul qilinasiz.</p>
+                    <div class="schedule-inputs" id="scheduleInputs" style="display: none;">
+                      <div class="schedule-grid">
+                        <select id="scheduleDay" class="form-control">
+                          <option value="today">Bugun (13-Oktyabr)</option>
+                          <option value="tomorrow">Ertaga (14-Oktyabr)</option>
+                          <option value="afterTomorrow">Indinga (15-Oktyabr)</option>
+                        </select>
+                        <select id="scheduleTime" class="form-control">
+                          <option value="14:00">14:00 - 15:00</option>
+                          <option value="15:30">15:30 - 16:30</option>
+                          <option value="17:00">17:00 - 18:00</option>
+                          <option value="18:30">18:30 - 19:30</option>
+                          <option value="20:00">20:00 - 21:00</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Step 5: Payment Method & Banks (To'lov Turlari) -->
+            <div class="form-step-block" id="payment-section">
+              <div class="step-title">
+                <span class="step-num">5</span>
+                <div>
+                  <h4>To'lov Usuli & Bank Kartalari</h4>
+                  <small>Karta orqali onlayn yoki joyida naqd to'lash</small>
+                </div>
+              </div>
+
+              <div class="payment-methods-grid">
+                <!-- Payme -->
+                <label class="pay-method-card active">
+                  <input type="radio" name="paymentMethod" value="payme" checked onchange="selectPaymentMethod('payme')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge payme-bg">PAYME</div>
+                    <span class="pay-name">Payme</span>
+                    <span class="pay-sub">Uzcard / Humo</span>
+                  </div>
+                </label>
+
+                <!-- Click -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="click" onchange="selectPaymentMethod('click')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge click-bg">CLICK</div>
+                    <span class="pay-name">Click Up</span>
+                    <span class="pay-sub">Tezkor to'lov</span>
+                  </div>
+                </label>
+
+                <!-- Uzum Bank -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="uzum" onchange="selectPaymentMethod('uzum')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge uzum-bg">UZUM</div>
+                    <span class="pay-name">Uzum Bank</span>
+                    <span class="pay-sub">0% komissiya</span>
+                  </div>
+                </label>
+
+                <!-- Uzcard -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="uzcard" onchange="selectPaymentMethod('uzcard')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge uzcard-bg">UZCARD</div>
+                    <span class="pay-name">Uzcard</span>
+                    <span class="pay-sub">Milliy karta</span>
+                  </div>
+                </label>
+
+                <!-- Humo -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="humo" onchange="selectPaymentMethod('humo')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge humo-bg">HUMO</div>
+                    <span class="pay-name">Humo</span>
+                    <span class="pay-sub">Kontaktsiz</span>
+                  </div>
+                </label>
+
+                <!-- Visa / Mastercard -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="visa" onchange="selectPaymentMethod('visa')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge visa-bg">VISA / MC</div>
+                    <span class="pay-name">Xalqaro</span>
+                    <span class="pay-sub">Visa, Mastercard</span>
+                  </div>
+                </label>
+
+                <!-- Cash -->
+                <label class="pay-method-card">
+                  <input type="radio" name="paymentMethod" value="cash" onchange="selectPaymentMethod('cash')">
+                  <div class="pay-method-box">
+                    <div class="pay-logo-badge cash-bg"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <span class="pay-name">Naqd / Terminal</span>
+                    <span class="pay-sub">Xizmat tugagach</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Input Container (if card selected) -->
+              <div class="card-details-panel" id="cardDetailsPanel">
+                <div class="card-details-header">
+                  <span><i class="fa-solid fa-lock text-green"></i> Xavfsiz Bank To'lovi (256-bit SSL)</span>
+                  <div class="accepted-icons">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <span class="bank-pill">UZCARD</span>
+                    <span class="bank-pill">HUMO</span>
+                  </div>
+                </div>
+
+                <div class="card-mock-form">
+                  <div class="form-group">
+                    <label>Karta Raqami (16 ta raqam):</label>
+                    <div class="card-num-wrapper">
+                      <i class="fa-solid fa-credit-card card-input-icon"></i>
+                      <input type="text" id="cardNumberInput" class="form-control" placeholder="8600 0000 0000 0000" maxlength="19" value="8600 5412 8932 7701">
+                      <span class="card-type-detector" id="cardDetector">Uzcard</span>
+                    </div>
+                  </div>
+
+                  <div class="card-row-sub">
+                    <div class="form-group">
+                      <label>Amal Qilish Muddati:</label>
+                      <input type="text" id="cardExpiryInput" class="form-control" placeholder="MM/YY" maxlength="5" value="12/28">
+                    </div>
+                    <div class="form-group">
+                      <label>Karta Egasi:</label>
+                      <input type="text" id="cardHolderInput" class="form-control" placeholder="ISM FAMILIYA" value="SARDOR RAHIMOV">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Summary & Checkout Button -->
+            <div class="order-summary-box">
+              <div class="summary-line">
+                <span>Tanlangan Tarif:</span>
+                <strong id="summaryTierName">Kompleks Premium</strong>
+              </div>
+              <div class="summary-line">
+                <span>Xizmat ko'rsatuvchi xodimlar:</span>
+                <strong class="highlight-cyan" id="summaryWorkers">3 nafar mutaxassis</strong>
+              </div>
+              <div class="summary-line">
+                <span>Avtomobil va Raqam:</span>
+                <strong id="summaryCarPlate">Gentra (01 A 777 AA)</strong>
+              </div>
+              <div class="summary-line">
+                <span>Xizmat usuli:</span>
+                <strong id="summaryServiceMode">Sayyor Moyka (Manzilingizga borish)</strong>
+              </div>
+              <div class="summary-line">
+                <span>To'lov usuli:</span>
+                <strong id="summaryPaymentMethod">Payme Karta orqali</strong>
+              </div>
+              <hr class="summary-hr">
+              <div class="summary-total-line">
+                <span>Jami To'lov:</span>
+                <div class="total-price-wrap">
+                  <span class="total-price-amount" id="summaryTotalPrice">500 000</span>
+                  <span class="total-price-unit" id="summaryPriceUnit">so'm</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-xl" id="submitOrderBtn">
+              <i class="fa-solid fa-circle-check"></i> Buyurtmani Tasdiqlash & Navbatga Yozilish
+            </button>
+          </form>
+        </div>
+
+        <!-- Live Queue Monitor & Side Dashboard -->
+        <div class="queue-monitor-panel glass-card">
+          <div class="monitor-header">
+            <div class="monitor-title">
+              <i class="fa-solid fa-tv text-cyan"></i>
+              <h3>Jonli Navbat Tablosi</h3>
+            </div>
+            <div class="live-indicator">
+              <span class="blink-dot"></span> LIVE
+            </div>
+          </div>
+
+          <p class="monitor-sub">Barcha filiallar va sayyor guruhlar bo'yicha jonli holat</p>
+
+          <!-- Currently Being Washed -->
+          <div class="queue-stage-group">
+            <div class="stage-label">
+              <i class="fa-solid fa-spinner fa-spin text-cyan"></i>
+              <span>Hozir Yuvilmoqda (Bokslarda):</span>
+            </div>
+            <div class="queue-list" id="inProgressList">
+              <div class="queue-item in-progress">
+                <div class="qi-plate">01 777 AAA</div>
+                <div class="qi-details">
+                  <span class="qi-model">Malibu 2 • VIP Detailing</span>
+                  <span class="qi-staff"><i class="fa-solid fa-users"></i> 4 usta ishlamoqda</span>
+                </div>
+                <div class="qi-progress">
+                  <span class="progress-bar" style="width: 75%;"></span>
+                  <span class="progress-text">75%</span>
+                </div>
+              </div>
+
+              <div class="queue-item in-progress">
+                <div class="qi-plate">01 101 BBB</div>
+                <div class="qi-details">
+                  <span class="qi-model">BYD Song Plus • Kompleks</span>
+                  <span class="qi-staff"><i class="fa-solid fa-users"></i> 3 usta ishlamoqda</span>
+                </div>
+                <div class="qi-progress">
+                  <span class="progress-bar" style="width: 45%;"></span>
+                  <span class="progress-text">45%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Waiting in Line -->
+          <div class="queue-stage-group">
+            <div class="stage-label">
+              <i class="fa-solid fa-hourglass-half text-gold"></i>
+              <span>Navbatda Kutmoqda:</span>
+            </div>
+            <div class="queue-list" id="waitingList">
+              <div class="queue-item waiting">
+                <div class="qi-plate">01 555 UZB</div>
+                <div class="qi-details">
+                  <span class="qi-model">Tahoe • Ultra Pro ($100)</span>
+                  <span class="qi-wait">Kutilish: ~10 daqiqa</span>
+                </div>
+                <span class="qi-badge">Navbat #1</span>
+              </div>
+
+              <div class="queue-item waiting">
+                <div class="qi-plate">01 999 VIP</div>
+                <div class="qi-details">
+                  <span class="qi-model">Cobalt • Standart</span>
+                  <span class="qi-wait">Kutilish: ~18 daqiqa</span>
+                </div>
+                <span class="qi-badge">Navbat #2</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer Past/Active Orders Widget -->
+          <div class="my-active-ticket-box" id="myTicketBox" style="display: none;">
+            <div class="ticket-header">
+              <i class="fa-solid fa-ticket-simple text-gold"></i>
+              <span>Sizning Navbat Chiptangiz:</span>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-number" id="ticketNumberDisplay">#UZM-1082</div>
+              <div class="ticket-details-row">
+                <span>Avtomobil:</span>
+                <strong id="ticketPlateDisplay">01 A 777 AA</strong>
+              </div>
+              <div class="ticket-details-row">
+                <span>Holati:</span>
+                <span class="status-badge-live" id="ticketStatusDisplay">Qabul qilindi • Navbatda</span>
+              </div>
+              <div class="ticket-details-row">
+                <span>Ustalar:</span>
+                <span id="ticketWorkersDisplay">3 nafar mutaxassis</span>
+              </div>
+              <button class="btn btn-sm btn-outline btn-block" onclick="openReceiptModal()">
+                <i class="fa-solid fa-receipt"></i> Kvitansiya & Chekni Ko'rish
+              </button>
+            </div>
+          </div>
+
+          <!-- Help / Guarantee Banner -->
+          <div class="guarantee-box">
+            <i class="fa-solid fa-certificate guaran-icon"></i>
+            <div>
+              <strong>100% Qoniqish Kafolati</strong>
+              <p>Agar yuvish natijasi yoqmasa, ustalarimiz bepul qayta yuvib berishadi yoki pulingiz qaytariladi.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Receipt & Ticket Modal -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeReceiptModal()">&times;</button>
+      
+      <div class="receipt-paper" id="printableReceipt">
+        <div class="receipt-header">
+          <div class="receipt-logo">UZ<span>MOY</span></div>
+          <p class="receipt-title">ONLINE AVTOMOYKA CHEKI & NAVBAT TALONI</p>
+          <div class="receipt-id" id="receiptCode">BUYURTMA: #UZM-84920</div>
+          <div class="receipt-date" id="receiptDate">13-10-2026, 14:35</div>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-row">
+          <span>Mijoz Ismi:</span>
+          <strong id="rClientName">Sardor Rahimov</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Telefon:</span>
+          <strong id="rPhone">+998 90 123 45 67</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Avtomobil Davlat Raqami:</span>
+          <strong class="receipt-plate" id="rPlate">01 A 777 AA</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Mashina Modeli:</span>
+          <strong id="rModel">Chevrolet Gentra</strong>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-row">
+          <span>Xizmat Tarifi:</span>
+          <strong id="rTier">Kompleks Premium</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Xizmat Ko'rsatuvchilar:</span>
+          <strong class="text-cyan" id="rWorkers">3 nafar mutaxassis</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Xizmat Turi:</span>
+          <strong id="rMode">Sayyor Moyka (Manzilga borish)</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Manzil / Lokatsiya:</span>
+          <span id="rLocation">Toshkent sh., Yunusobod</span>
+        </div>
+        <div class="receipt-row">
+          <span>Navbat Holati:</span>
+          <span class="badge-success" id="rQueue">Navbat #3 • Kutilish ~20 min</span>
+        </div>
+        <div class="receipt-row">
+          <span>To'lov Turi:</span>
+          <strong id="rPayment">Payme (8600 •••• 7701)</strong>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-total">
+          <span>JAMI TO'LOV:</span>
+          <span class="r-amount" id="rTotal">500 000 so'm</span>
+        </div>
+
+        <div class="receipt-qr">
+          <div class="qr-mock">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <small>Ushbu QR-kod orqali navbatingizni filialda tekshiring</small>
+        </div>
+
+        <div class="receipt-footer">
+          <p>UZMOY xizmatini tanlaganingiz uchun tashakkur!</p>
+          <p>Mijozlarni qo'llab-quvvatlash: +998 (71) 200-00-99</p>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> Chekni Chop Etish
+        </button>
+        <button class="btn btn-primary" onclick="closeReceiptModal()">
+          <i class="fa-solid fa-check"></i> Tushunarli / Yopish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-droplet logo-icon"></i>
+          <span class="logo-title">UZ<span>MOY</span></span>
+        </div>
+        <p class="footer-about">
+          O'zbekistondagi eng ilg'or avtomoyka va avtodetailing platformasi. Sayyor xizmat, 24/7 navbat boshqaruvi, universal narxlar va barcha bank to'lovlari.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Tariflar</h4>
+        <ul>
+          <li><a href="#services-section">Standart Ekspress — 250 000 so'm</a></li>
+          <li><a href="#services-section">Kompleks Premium — 500 000 so'm</a></li>
+          <li><a href="#services-section">VIP Detailing — 800 000 so'm</a></li>
+          <li><a href="#services-section">Ultra Pro — 100$</a></li>
+          <li><a href="#services-section">Prezident Royal — 300$</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Xizmatlar</h4>
+        <ul>
+          <li><a href="#location-section">🚚 Sayyor Moyka (Manzilga chaqirish)</a></li>
+          <li><a href="#location-section">🏢 Stasionar Filiallar</a></li>
+          <li><a href="#queue-section">⏱️ Jonli Navbat Tekshirish</a></li>
+          <li><a href="#payment-section">💳 Payme, Click, Uzum, Humo, Uzcard</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Bog'lanish</h4>
+        <p><i class="fa-solid fa-phone text-cyan"></i> +998 (71) 200-00-99</p>
+        <p><i class="fa-solid fa-location-dot text-cyan"></i> Toshkent sh., Amir Temur 107B</p>
+        <p><i class="fa-solid fa-clock text-cyan"></i> 24/7 Tun-u kun xizmat</p>
+        <div class="social-links">
+          <a href="#" class="social-icon"><i class="fa-brands fa-telegram"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 UZMOY. Barcha huquqlar himoyalangan. Oliy toifali avtomoyka xizmatlari.</p>
+    </div>
+  </footer>
+
+  <!-- Leaflet JS for Maps -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Main Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+name: Build Android APK for UZMOY
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Prepare Web Assets in Android Project
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp index.html android/app/src/main/assets/
+          cp styles.css android/app/src/main/assets/
+          cp app.js android/app/src/main/assets/
+          cp manifest.json android/app/src/main/assets/
+          cp sw.js android/app/src/main/assets/ || true
+
+      - name: Grant Execute Permission for Gradlew
+        run: |
+          cd android
+          chmod +x gradlew || true
+
+      - name: Build Android APK with Gradle
+        run: |
+          cd android
+          gradle assembleDebug --stacktrace
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: UZMOY-App-Debug-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
