@@ -33,9 +33,10 @@
   <div class="ambient-glow glow-3"></div>
 
   <!-- Header / Navigation -->
+  <!-- Header / Navigation -->
   <header class="site-header">
     <div class="header-container">
-      <div class="brand-logo" id="logoBtn">
+      <div class="brand-logo" id="logoBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="UZMOY Bosh sahifa">
         <div class="logo-icon-wrap">
           <i class="fa-solid fa-droplet logo-icon"></i>
           <span class="pulse-ring"></span>
@@ -47,23 +48,58 @@
       </div>
 
       <nav class="main-nav">
-        <a href="#services-section" class="nav-link active"><i class="fa-solid fa-car-wash"></i> Xizmatlar & Narxlar</a>
-        <a href="#booking-section" class="nav-link"><i class="fa-solid fa-calendar-check"></i> Buyurtma Berish</a>
-        <a href="#location-section" class="nav-link"><i class="fa-solid fa-location-dot"></i> Lokatsiya & Sayyor</a>
-        <a href="#queue-section" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Jonli Navbat</a>
+        <a href="#services-section" class="nav-link active"><i class="fa-solid fa-car-wash"></i> Xizmatlar</a>
+        <a href="#booking-section" class="nav-link"><i class="fa-solid fa-calendar-check"></i> Buyurtma</a>
+        <a href="#location-section" class="nav-link"><i class="fa-solid fa-location-dot"></i> Lokatsiya</a>
+        <a href="#queue-section" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Navbat</a>
+        <a href="#news-section" class="nav-link"><i class="fa-solid fa-newspaper"></i> Yangiliklar</a>
+        <a href="#reviews-section" class="nav-link"><i class="fa-solid fa-star"></i> Sharhlar</a>
+        <a href="#faq-section" class="nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
       </nav>
 
       <div class="header-actions">
-        <div class="live-status-pill">
+        <!-- Tungi / Kunduzgi Rejim Switcher -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Tungi / Kunduzgi rejimni almashtirish">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+          <span class="theme-text" id="themeText">Tungi rejim</span>
+        </button>
+
+        <!-- Filiallar Jonli Holati Tugmasi -->
+        <button class="live-status-pill interactive-pill" onclick="openBranchesModal()" title="Filiallar va sayyor guruhlar holati">
           <span class="status-dot"></span>
-          <span class="status-text">Xizmat ochiq • 24/7</span>
-        </div>
+          <span class="status-text">Ochiq • 24/7 <i class="fa-solid fa-chevron-down pill-arrow"></i></span>
+        </button>
+
         <button class="btn btn-primary btn-sm" id="quickBookBtn">
           <i class="fa-solid fa-bolt"></i> Tezkor Bron
+        </button>
+
+        <!-- Mobil Menyu Tugmasi -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Mobil menyuni ochish">
+          <i class="fa-solid fa-bars" id="mobileMenuIcon"></i>
         </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <a href="#services-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-car-wash"></i> Xizmatlar & Narxlar</a>
+    <a href="#booking-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-calendar-check"></i> Onlayn Buyurtma</a>
+    <a href="#location-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-location-dot"></i> Lokatsiya & Sayyor Moyka</a>
+    <a href="#queue-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-clock-rotate-left"></i> Jonli Navbat Tablosi</a>
+    <a href="#news-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-newspaper"></i> Yangiliklar & Aksiya</a>
+    <a href="#reviews-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-star"></i> Mijozlar Fikrlari</a>
+    <a href="#faq-section" class="nav-link" onclick="closeMobileMenu()"><i class="fa-solid fa-circle-question"></i> Savol-Javoblar</a>
+    <div class="mobile-drawer-footer">
+      <button class="btn btn-primary btn-sm btn-block" onclick="closeMobileMenu(); document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'})">
+        <i class="fa-solid fa-bolt"></i> Buyurtma berish
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="openBranchesModal()">
+        <i class="fa-solid fa-shop"></i> Filiallar
+      </button>
+    </div>
+  </div>
 
   <main>
     <!-- Hero Section -->
@@ -113,6 +149,9 @@
           <a href="#services-section" class="btn btn-outline btn-lg">
             <i class="fa-solid fa-list-check"></i> Narxlar & Bosqichlar
           </a>
+          <button type="button" class="btn btn-outline btn-lg" onclick="openPlanComparisonModal()">
+            <i class="fa-solid fa-table-columns"></i> Taqqoslash
+          </button>
         </div>
       </div>
 
@@ -131,7 +170,7 @@
           <!-- Mini Car Plate Visualizer in Hero -->
           <div class="hero-plate-box">
             <span class="box-label">Avtomobil Davlat Raqami:</span>
-            <div class="uzb-plate mini-plate">
+            <div class="uzb-plate mini-plate" onclick="focusPlateInput()" style="cursor: pointer;" title="Raqamni o'zgartirish uchun bosing">
               <div class="plate-flag-col">
                 <span class="plate-code" id="heroPlateRegion">01</span>
                 <span class="plate-flag-strip">🇺🇿</span>
@@ -559,6 +598,14 @@
                       <i class="fa-solid fa-crosshairs"></i> GPS Aniqlash
                     </button>
                   </div>
+                  <!-- Quick Address Presets -->
+                  <div class="quick-address-chips">
+                    <span class="chip-label text-dim"><i class="fa-solid fa-bolt text-gold"></i> Mashhur manzillar:</span>
+                    <button type="button" class="address-chip" onclick="setPresetAddress('Toshkent sh., Yunusobod markazi, Mega Planet oldida', 41.3650, 69.2880)">🏬 Mega Planet</button>
+                    <button type="button" class="address-chip" onclick="setPresetAddress('Toshkent sh., Shayxontohur tumani, Tashkent City Mall', 41.3140, 69.2510)">🏢 Tashkent City</button>
+                    <button type="button" class="address-chip" onclick="setPresetAddress('Toshkent sh., Chilonzor tumani, Qatortol 28', 41.2820, 69.2130)">🛍️ Qatortol</button>
+                    <button type="button" class="address-chip" onclick="setPresetAddress('Toshkent sh., Mirzo Ulugbek tumani, Buyuk Ipak Yoli 90', 41.3260, 69.3320)">📍 Buyuk Ipak Yo'li</button>
+                  </div>
                 </div>
 
                 <!-- Interactive Map Container -->
@@ -911,6 +958,292 @@
               <p>Agar yuvish natijasi yoqmasa, ustalarimiz bepul qayta yuvib berishadi yoki pulingiz qaytariladi.</p>
             </div>
           </div>
+    <!-- ===================================================================
+         Yangiliklar & Detailing Maslahatlar (News Section)
+         =================================================================== -->
+    <section class="section news-section" id="news-section">
+      <div class="section-header text-center">
+        <div class="section-badge"><i class="fa-solid fa-newspaper text-cyan"></i> So'nggi Yangiliklar & Aksiya</div>
+        <h2 class="section-title">UZMOY Yangiliklari & Detailing Maslahatlari</h2>
+        <p class="section-desc">
+          Avtomobilingizni ko'rgazma holatida saqlash sirlari, eng yangi nano-keramika texnologiyalari va maxsus aksiyalar bilan tanishing.
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="news-tabs">
+        <button class="news-tab-btn active" onclick="filterNews('all', this)"><i class="fa-solid fa-border-all"></i> Barchasi</button>
+        <button class="news-tab-btn" onclick="filterNews('promos', this)"><i class="fa-solid fa-fire text-gold"></i> Aksiyalar & Chegirma</button>
+        <button class="news-tab-btn" onclick="filterNews('tech', this)"><i class="fa-solid fa-microchip text-cyan"></i> Yangi Texnologiya</button>
+        <button class="news-tab-btn" onclick="filterNews('tips', this)"><i class="fa-solid fa-lightbulb text-purple"></i> Avto-Maslahat</button>
+      </div>
+
+      <!-- News Cards Grid -->
+      <div class="news-grid" id="newsGrid">
+        <!-- News Card 1 -->
+        <article class="news-card" data-category="tech">
+          <div class="news-thumb" style="background: linear-gradient(135deg, #091e3a 0%, #173b6c 100%);">
+            <i class="fa-solid fa-shield-virus news-thumb-icon" style="color: #00e5ff;"></i>
+            <span class="news-badge-tag tag-tech"><i class="fa-solid fa-microchip"></i> Texnologiya</span>
+            <span class="news-read-time"><i class="fa-solid fa-clock"></i> 3 daqiqa</span>
+          </div>
+          <div class="news-body">
+            <span class="news-date"><i class="fa-solid fa-calendar-day"></i> 13-Oktyabr, 2026</span>
+            <h3 class="news-title">UZMOY 9H Nano-Keramika: Bo'yoqni quyosh va tirnalishlardan 3 yilgacha himoyalash</h3>
+            <p class="news-excerpt">
+              Toshkentning yozgi issiq quyoshi va qishki tuzli loylari avtomobil lakini tezda xiralashtiradi. 3 qavatli 9H keramik kvars qoplamasi qanday ishlashi haqida bilib oling.
+            </p>
+            <div class="news-card-footer">
+              <div class="news-author">
+                <span class="author-avatar"><i class="fa-solid fa-user-ninja"></i></span>
+                <span>Akmal (Bosh deteyler)</span>
+              </div>
+              <button class="btn-read-more" onclick="openNewsModal(1)">
+                Batafsil <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 2 -->
+        <article class="news-card" data-category="promos">
+          <div class="news-thumb" style="background: linear-gradient(135deg, #2b1704 0%, #683808 100%);">
+            <i class="fa-solid fa-gift news-thumb-icon" style="color: #f59e0b;"></i>
+            <span class="news-badge-tag tag-promo"><i class="fa-solid fa-fire"></i> Aksiya</span>
+            <span class="news-read-time"><i class="fa-solid fa-clock"></i> 2 daqiqa</span>
+          </div>
+          <div class="news-body">
+            <span class="news-date"><i class="fa-solid fa-calendar-day"></i> 11-Oktyabr, 2026</span>
+            <h3 class="news-title">Kuzgi Maxsus Taklif: Kompleks Premiumga 20% keshbek va salon ozonatsiyasi BEPUL!</h3>
+            <p class="news-excerpt">
+              Ushbu haftada UZMOY ilovasi orqali buyurtma bergan har bir mijozga salonni bakteriya va yoqimsiz hidlardan 100% tozalovchi ozon generatori sovg'a qilinadi.
+            </p>
+            <div class="news-card-footer">
+              <div class="news-author">
+                <span class="author-avatar"><i class="fa-solid fa-bullhorn"></i></span>
+                <span>UZMOY Marketing</span>
+              </div>
+              <button class="btn-read-more" onclick="openNewsModal(2)">
+                Batafsil <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 3 -->
+        <article class="news-card" data-category="tech">
+          <div class="news-thumb" style="background: linear-gradient(135deg, #05261d 0%, #0e5641 100%);">
+            <i class="fa-solid fa-van-shuttle news-thumb-icon" style="color: #10b981;"></i>
+            <span class="news-badge-tag tag-platform"><i class="fa-solid fa-satellite"></i> Platforma</span>
+            <span class="news-read-time"><i class="fa-solid fa-clock"></i> 4 daqiqa</span>
+          </div>
+          <div class="news-body">
+            <span class="news-date"><i class="fa-solid fa-calendar-day"></i> 08-Oktyabr, 2026</span>
+            <h3 class="news-title">Toshkent bo'ylab 10 ta yangi sayyor moyka ekipajlari ishga tushirildi</h3>
+            <p class="news-excerpt">
+              Karcher HD avtonom agregatlari va o'z toza suv zahirasiga ega zamonaviy sayyor furgonlarimiz endi barcha tumanlarda 15-25 daqiqa ichida yetib boradi.
+            </p>
+            <div class="news-card-footer">
+              <div class="news-author">
+                <span class="author-avatar"><i class="fa-solid fa-truck-fast"></i></span>
+                <span>Logistika bo'limi</span>
+              </div>
+              <button class="btn-read-more" onclick="openNewsModal(3)">
+                Batafsil <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- News Card 4 -->
+        <article class="news-card" data-category="tips">
+          <div class="news-thumb" style="background: linear-gradient(135deg, #240c38 0%, #581c87 100%);">
+            <i class="fa-solid fa-charging-station news-thumb-icon" style="color: #c084fc;"></i>
+            <span class="news-badge-tag tag-tips"><i class="fa-solid fa-lightbulb"></i> Tavsiya</span>
+            <span class="news-read-time"><i class="fa-solid fa-clock"></i> 5 daqiqa</span>
+          </div>
+          <div class="news-body">
+            <span class="news-date"><i class="fa-solid fa-calendar-day"></i> 05-Oktyabr, 2026</span>
+            <h3 class="news-title">Elektromobillar (BYD, Zeekr, Li Auto) parvarishi bo'yicha maxsus deteyling sirlari</h3>
+            <p class="news-excerpt">
+              Elektromobillarni yuvishda suv bosimini qayerga yo'naltirish mumkin emas? Dvigatel qopqog'i ostidagi yuqori voltli bloklarni qanday quruq tozalash kerak?
+            </p>
+            <div class="news-card-footer">
+              <div class="news-author">
+                <span class="author-avatar"><i class="fa-solid fa-bolt"></i></span>
+                <span>EV Mutaxassislari</span>
+              </div>
+              <button class="btn-read-more" onclick="openNewsModal(4)">
+                Batafsil <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         Mijozlar Fikrlari & Sharhlar (Reviews Section)
+         =================================================================== -->
+    <section class="section" id="reviews-section">
+      <div class="reviews-header-wrap">
+        <div>
+          <div class="section-badge"><i class="fa-solid fa-star text-gold"></i> Haqiqiy Sharhlar</div>
+          <h2 class="section-title">Mijozlarimiz Nima Deyishadi?</h2>
+          <p class="section-desc">Bizning xizmatimizdan foydalangan avtomobil egalarining xolis fikrlari</p>
+        </div>
+        <div class="rating-aggregate">
+          <span class="rating-score">4.9</span>
+          <div>
+            <div class="rating-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <span class="rating-count">1 850+ tasdiqlangan baholar</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="openReviewModal()" style="margin-left: 10px;">
+            <i class="fa-solid fa-pen-to-square"></i> Fikr Bildirish
+          </button>
+        </div>
+      </div>
+
+      <div class="reviews-grid" id="reviewsGrid">
+        <div class="review-card">
+          <div class="review-card-top">
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">SR</div>
+              <div>
+                <div class="reviewer-name">Sardor Rahimov</div>
+                <div class="reviewer-car">Chevrolet Malibu 2 • 01 777 AAA</div>
+              </div>
+            </div>
+            <span class="review-verified"><i class="fa-solid fa-shield-check"></i> Tasdiqlangan</span>
+          </div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            "Sayyor moyka xizmatidan foydalandim. Toshkent Citydagi ofisim oldiga 20 daqiqada yetib kelishdi. Mashinamni 3 nafar usta yuvdi, salon tozaligi va oynalar jilosiga gap yo'q! Katta rahmat."
+          </p>
+          <span class="review-service-badge"><i class="fa-solid fa-gem"></i> VIP Detailing Yuvish</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-top">
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">JM</div>
+              <div>
+                <div class="reviewer-name">Jasur Maxmudov</div>
+                <div class="reviewer-car">BYD Song Plus • 01 555 UZB</div>
+              </div>
+            </div>
+            <span class="review-verified"><i class="fa-solid fa-shield-check"></i> Tasdiqlangan</span>
+          </div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            "Elektromobil bo'lgani uchun har qanday joyda yuvdira olmasdim. UZMOY ustalari barcha zaryad portlari va sensorlarni ehtiyotlab, kontaktsiz neytral ko'pik bilan tozalashdi. Juda mamnunman."
+          </p>
+          <span class="review-service-badge"><i class="fa-solid fa-shield-halved"></i> Kompleks Premium</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-top">
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">BK</div>
+              <div>
+                <div class="reviewer-name">Bobur Karimov</div>
+                <div class="reviewer-car">Chevrolet Gentra • 10 999 VIP</div>
+              </div>
+            </div>
+            <span class="review-verified"><i class="fa-solid fa-shield-check"></i> Tasdiqlangan</span>
+          </div>
+          <div class="review-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="review-text">
+            "Amir Temur filialiga oldindan yozilib bordim. Navbat kutmasdan to'g'ri boksga kirdim. Chek va kvitansiya telefonimda saqlanib qoldi. To'lovni Click orqali qulay qildim. 10/10."
+          </p>
+          <span class="review-service-badge"><i class="fa-solid fa-car-wash"></i> Standart Ekspress</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         Ko'p Beriladigan Savollar (FAQ Section)
+         =================================================================== -->
+    <section class="section" id="faq-section">
+      <div class="section-header text-center">
+        <div class="section-badge"><i class="fa-solid fa-circle-question text-cyan"></i> Yordam & Ma'lumot</div>
+        <h2 class="section-title">Ko'p Beriladigan Savollar (FAQ)</h2>
+        <p class="section-desc">Platformamiz, xizmat ko'rsatish shartlari va kafolatlar haqida tezkor javoblar</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item active">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span><i class="fa-solid fa-van-shuttle"></i> Sayyor moykada suv va elektr energiyasi qayerdan olinadi?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Bizning har bir maxsus jihozlangan furgonimiz to'liq avtonom hisoblanadi. Unda 500 litr tozalangan suv baki, jim ishlovchi kuchli inverter generatori va Karcher HD uskunasi mavjud. Sizdan na suv, na elektr tok talab qilinmaydi!
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span><i class="fa-solid fa-rotate-left"></i> Agar yuvish sifati yoqmasa nima bo'ladi?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Bizda 100% Sifat Kafolati amal qiladi. Agar biron detal yoki salon qismi sizning talabingizga to'g'ri kelmasa, ustalarimiz bepul qayta yuvib berishadi yoki to'langan mablag' darhol to'liq qaytariladi.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span><i class="fa-solid fa-credit-card"></i> Qanday to'lov usullari qabul qilinadi?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Barcha milliy va xalqaro to'lovlar mavjud: Payme, Click Up, Uzum Bank (0% komissiya), Uzcard, Humo, Visa va Mastercard. Shuningdek, xizmat ko'rsatib bo'lingach joyida naqd yoki mobil terminal orqali to'lashingiz mumkin.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span><i class="fa-solid fa-gem"></i> Keramika va polirovka xizmatiga qancha muddat kafolat beriladi?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Prezident Royal 9H paketimizga 3 yil, Ultra Pro paketiga esa 6 oydan 1 yilgacha rasmiy kafolat sertifikati taqdim etiladi. Maxsus himoya qatlami avtomobil lakini quyosh ultrabinafsha nurlaridan va reagentlardan asraydi.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span><i class="fa-solid fa-clock"></i> Oldindan navbatga yozilish bepulmi?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Ha, onlayn platformamiz orqali navbatga yozilish mutlaqo bepul. Siz istalgan filialimizga yoki sayyor moykaga qulay vaqtingizni tanlab bron qilishingiz mumkin.
+          </div>
         </div>
       </div>
     </section>
@@ -1006,11 +1339,256 @@
     </div>
   </div>
 
+  <!-- News Detail Modal -->
+  <div class="modal-overlay" id="newsModal">
+    <div class="modal-card" style="max-width: 750px;">
+      <button class="modal-close-btn" onclick="closeNewsModal()">&times;</button>
+      <div class="news-modal-body" id="newsModalContent">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Leave a Review Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-card" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="closeReviewModal()">&times;</button>
+      <div style="padding: 24px;">
+        <h3 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+          <i class="fa-solid fa-star text-gold"></i> Fikr Qoldirish
+        </h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">
+          UZMOY xizmatidan olgan taassurotingizni baholang va yozib qoldiring.
+        </p>
+        <form onsubmit="handleReviewSubmit(event)">
+          <div class="form-group" style="text-align: center;">
+            <label style="display: block; margin-bottom: 4px;">Xizmatni baholang:</label>
+            <div class="star-rating-select" id="starRatingSelect" style="justify-content: center;">
+              <i class="fa-solid fa-star active" data-rating="1" onclick="setRating(1)"></i>
+              <i class="fa-solid fa-star active" data-rating="2" onclick="setRating(2)"></i>
+              <i class="fa-solid fa-star active" data-rating="3" onclick="setRating(3)"></i>
+              <i class="fa-solid fa-star active" data-rating="4" onclick="setRating(4)"></i>
+              <i class="fa-solid fa-star active" data-rating="5" onclick="setRating(5)"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-user"></i> Ismingiz:</label>
+            <input type="text" id="revNameInput" class="form-control" placeholder="Ismingizni kiriting" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-car"></i> Mashinangiz (rusum va raqam):</label>
+            <input type="text" id="revCarInput" class="form-control" placeholder="Masalan: Tracker 2 (01 A 123 AA)" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-comment-dots"></i> Sharhingiz:</label>
+            <textarea id="revTextInput" class="form-control" rows="4" placeholder="Ustalarning muomalasi, yuvish sifati, tezligi haqida fikringiz..." required style="resize: vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 10px;">
+            <i class="fa-solid fa-paper-plane"></i> Sharhni Yuborish
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branches Live Capacity Modal -->
+  <div class="modal-overlay" id="branchesModal">
+    <div class="modal-card" style="max-width: 820px;">
+      <button class="modal-close-btn" onclick="closeBranchesModal()">&times;</button>
+      <div style="padding: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 700; color: var(--text-main);">
+              <i class="fa-solid fa-building-circle-check text-cyan"></i> Filiallar & Sayyor Ekipajlar Holati
+            </h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Hozirgi barcha statsionar filiallar va faol mobil guruhlar</p>
+          </div>
+          <span class="live-indicator"><span class="blink-dot"></span> REAL VAQT</span>
+        </div>
+
+        <div class="branches-modal-grid">
+          <div class="branch-modal-card">
+            <h4><i class="fa-solid fa-shop text-cyan"></i> Amir Temur filiali</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted);"><i class="fa-solid fa-location-dot"></i> Yunusobod, Amir Temur 107B</p>
+            <div style="font-size: 12px; color: var(--text-dim);">Sig'im: <strong>6 ta boks</strong></div>
+            <div style="font-size: 12px; color: var(--gold-accent);"><i class="fa-solid fa-car"></i> 4 ta mashina navbatda (~15 min)</div>
+            <button class="btn btn-sm btn-outline" onclick="selectStationBranch('amir_temur'); closeBranchesModal();">Shu filialga yozilish</button>
+          </div>
+
+          <div class="branch-modal-card">
+            <h4><i class="fa-solid fa-shop text-cyan"></i> Chilonzor Detailing</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted);"><i class="fa-solid fa-location-dot"></i> Qatortol ko'chasi 28</p>
+            <div style="font-size: 12px; color: var(--text-dim);">Sig'im: <strong>4 ta boks</strong></div>
+            <div style="font-size: 12px; color: var(--green-live);"><i class="fa-solid fa-check"></i> 2 ta mashina (~10 min)</div>
+            <button class="btn btn-sm btn-outline" onclick="selectStationBranch('chilonzor'); closeBranchesModal();">Shu filialga yozilish</button>
+          </div>
+
+          <div class="branch-modal-card">
+            <h4><i class="fa-solid fa-shop text-cyan"></i> Sergeli Mega-Moyka</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted);"><i class="fa-solid fa-location-dot"></i> Yangi Sergeli yo'li 14</p>
+            <div style="font-size: 12px; color: var(--text-dim);">Sig'im: <strong>8 ta boks</strong></div>
+            <div style="font-size: 12px; color: var(--gold-accent);"><i class="fa-solid fa-car"></i> 5 ta mashina (~25 min)</div>
+            <button class="btn btn-sm btn-outline" onclick="selectStationBranch('sergeli'); closeBranchesModal();">Shu filialga yozilish</button>
+          </div>
+
+          <div class="branch-modal-card">
+            <h4><i class="fa-solid fa-shop text-cyan"></i> Mirzo Ulug'bek</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted);"><i class="fa-solid fa-location-dot"></i> Buyuk Ipak Yo'li 90A</p>
+            <div style="font-size: 12px; color: var(--text-dim);">Sig'im: <strong>5 ta boks</strong></div>
+            <div style="font-size: 12px; color: var(--green-live);"><i class="fa-solid fa-check"></i> 3 ta mashina (~12 min)</div>
+            <button class="btn btn-sm btn-outline" onclick="selectStationBranch('mirzo_ulugbek'); closeBranchesModal();">Shu filialga yozilish</button>
+          </div>
+        </div>
+
+        <div style="background: rgba(0, 229, 255, 0.08); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <strong style="color: var(--cyan-primary);"><i class="fa-solid fa-van-shuttle"></i> Sayyor Ekipajlar Parki:</strong>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">10 ta mobil guruhdan 7 tasi hozir Toshkent ko'chalarida faol xizmatda.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="closeBranchesModal(); toggleServiceMode('mobile'); document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'})">
+            <i class="fa-solid fa-location-arrow"></i> Sayyor Moyka Chaqirish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plan Comparison Modal -->
+  <div class="modal-overlay" id="compareModal">
+    <div class="modal-card" style="max-width: 900px;">
+      <button class="modal-close-btn" onclick="closePlanComparisonModal()">&times;</button>
+      <div style="padding: 24px;">
+        <h3 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+          <i class="fa-solid fa-table-columns text-cyan"></i> Barcha Tariflarni Solishtirish Jadvali
+        </h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          Avtomobilingiz uchun eng mos xizmat to'plamini tanlang
+        </p>
+
+        <div class="compare-table-wrapper">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Xizmat bosqichlari</th>
+                <th>Standart (250k)</th>
+                <th>Kompleks (500k)</th>
+                <th>VIP Detailing (800k)</th>
+                <th>Ultra Pro ($100)</th>
+                <th>Prezident Royal ($300)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ustalar soni</td>
+                <td>2 usta</td>
+                <td>3 usta</td>
+                <td>4 usta</td>
+                <td>5 usta</td>
+                <td>6 usta</td>
+              </tr>
+              <tr>
+                <td>Yuqori bosimli suv & Ko'pik</td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+              </tr>
+              <tr>
+                <td>Salon changyutgich & Oynalar</td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+              </tr>
+              <tr>
+                <td>Dnishche & Shina qoraytirish</td>
+                <td>—</td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+              </tr>
+              <tr>
+                <td>Bitum tozalash & Dvigatel bug'lash</td>
+                <td>—</td>
+                <td>—</td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+              </tr>
+              <tr>
+                <td>Salon ozonatsiyasi & Teri kremi</td>
+                <td>—</td>
+                <td>—</td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+                <td><i class="fa-solid fa-check compare-check"></i></td>
+              </tr>
+              <tr>
+                <td>Polirovka (Oyna effekti)</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>1 bosqich</td>
+                <td>3 bosqich Mirror</td>
+              </tr>
+              <tr>
+                <td>Keramik nano-qoplama</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>6 oylik kvars</td>
+                <td>3 qavat 9H (3 yil)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Contact Modal -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-card" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
+      <div style="padding: 24px; text-align: center;">
+        <div class="logo-icon-wrap" style="margin: 0 auto 16px;">
+          <i class="fa-solid fa-headset logo-icon"></i>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+          UZMOY Bog'lanish & Qo'llab-quvvatlash
+        </h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+          Operatorlarimiz 24/7 rejimida sizning savollaringizga javob berishga tayyor.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="tel:+998712000099" class="btn btn-primary btn-block">
+            <i class="fa-solid fa-phone"></i> +998 (71) 200-00-99 Qo'ng'iroq qilish
+          </a>
+          <button class="btn btn-outline btn-block" onclick="showToast('Telegram bot: @uzmoy_bot ga ulanilmoqda...', 'info');" style="border-color: #0088cc; color: #0088cc;">
+            <i class="fa-brands fa-telegram"></i> Telegram Rasmiy Bot / Kanal
+          </button>
+          <button class="btn btn-outline btn-block" onclick="showToast('Instagram: @uzmoy_official sahifamiz', 'info');" style="border-color: #e1306c; color: #e1306c;">
+            <i class="fa-brands fa-instagram"></i> Instagram (@uzmoy_official)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notification -->
+  <div class="uzmoy-toast" id="uzmoyToast">
+    <i class="fa-solid fa-circle-check text-cyan" id="toastIcon"></i>
+    <span id="toastMessage">Xabar</span>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-brand">
-        <div class="brand-logo">
+        <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="cursor: pointer;">
           <i class="fa-solid fa-droplet logo-icon"></i>
           <span class="logo-title">UZ<span>MOY</span></span>
         </div>
@@ -1022,38 +1600,40 @@
       <div class="footer-links-col">
         <h4>Tariflar</h4>
         <ul>
-          <li><a href="#services-section">Standart Ekspress — 250 000 so'm</a></li>
-          <li><a href="#services-section">Kompleks Premium — 500 000 so'm</a></li>
-          <li><a href="#services-section">VIP Detailing — 800 000 so'm</a></li>
-          <li><a href="#services-section">Ultra Pro — 100$</a></li>
-          <li><a href="#services-section">Prezident Royal — 300$</a></li>
+          <li><a href="#services-section" onclick="selectPackage('tier1')">Standart Ekspress — 250 000 so'm</a></li>
+          <li><a href="#services-section" onclick="selectPackage('tier2')">Kompleks Premium — 500 000 so'm</a></li>
+          <li><a href="#services-section" onclick="selectPackage('tier3')">VIP Detailing — 800 000 so'm</a></li>
+          <li><a href="#services-section" onclick="selectPackage('tier4')">Ultra Pro — 100$</a></li>
+          <li><a href="#services-section" onclick="selectPackage('tier5')">Prezident Royal — 300$</a></li>
         </ul>
       </div>
 
       <div class="footer-links-col">
-        <h4>Xizmatlar</h4>
+        <h4>Bo'limlar & Xizmatlar</h4>
         <ul>
           <li><a href="#location-section">🚚 Sayyor Moyka (Manzilga chaqirish)</a></li>
-          <li><a href="#location-section">🏢 Stasionar Filiallar</a></li>
+          <li><a href="javascript:void(0)" onclick="openBranchesModal()">🏢 Stasionar Filiallar Holati</a></li>
           <li><a href="#queue-section">⏱️ Jonli Navbat Tekshirish</a></li>
-          <li><a href="#payment-section">💳 Payme, Click, Uzum, Humo, Uzcard</a></li>
+          <li><a href="#news-section">📰 Yangiliklar & Aksiya</a></li>
+          <li><a href="#reviews-section">⭐ Mijozlar Fikrlari</a></li>
+          <li><a href="#faq-section">❓ Savol-Javoblar (FAQ)</a></li>
         </ul>
       </div>
 
       <div class="footer-links-col">
         <h4>Bog'lanish</h4>
-        <p><i class="fa-solid fa-phone text-cyan"></i> +998 (71) 200-00-99</p>
+        <p><i class="fa-solid fa-phone text-cyan"></i> <a href="tel:+998712000099" style="color: inherit; text-decoration: none;">+998 (71) 200-00-99</a></p>
         <p><i class="fa-solid fa-location-dot text-cyan"></i> Toshkent sh., Amir Temur 107B</p>
         <p><i class="fa-solid fa-clock text-cyan"></i> 24/7 Tun-u kun xizmat</p>
         <div class="social-links">
-          <a href="#" class="social-icon"><i class="fa-brands fa-telegram"></i></a>
-          <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+          <a href="javascript:void(0)" onclick="openContactModal()" class="social-icon" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="javascript:void(0)" onclick="openContactModal()" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="javascript:void(0)" onclick="openContactModal()" class="social-icon" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 UZMOY. Barcha huquqlar himoyalangan. Oliy toifali avtomoyka xizmatlari.</p>
+      <p>&copy; 2026 UZMOY. Barcha huquqlar himoyalangan. Oliy toifali avtomoyka va detailing xizmatlari.</p>
     </div>
   </footer>
 

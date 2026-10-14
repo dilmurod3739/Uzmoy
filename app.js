@@ -113,6 +113,7 @@ let userMarker = null;
 
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initMap();
   setupEventListeners();
   loadSavedTicket();
@@ -744,3 +745,443 @@ if ('serviceWorker' in navigator) {
       .catch((err) => console.warn('Service Worker registration skipped:', err));
   });
 }
+
+/* ===================================================================
+   THEME TOGGLE MANAGEMENT (TUNGI VA KUNDUZGI REJIM)
+   =================================================================== */
+function initTheme() {
+  const savedTheme = localStorage.getItem('uzmoy_theme') || 'dark';
+  applyTheme(savedTheme, false);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+  applyTheme(newTheme, true);
+}
+
+function applyTheme(theme, showNotification = true) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('uzmoy_theme', theme);
+
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+
+  if (theme === 'light') {
+    if (themeIcon) {
+      themeIcon.className = 'fa-solid fa-sun';
+      themeIcon.style.color = '#f59e0b';
+    }
+    if (themeText) themeText.textContent = 'Kunduzgi rejim';
+    if (showNotification) showToast("Kunduzgi rejim yoqildi ☀️", "info");
+  } else {
+    if (themeIcon) {
+      themeIcon.className = 'fa-solid fa-moon';
+      themeIcon.style.color = '#00e5ff';
+    }
+    if (themeText) themeText.textContent = 'Tungi rejim';
+    if (showNotification) showToast("Tungi rejim yoqildi 🌙", "info");
+  }
+}
+
+/* ===================================================================
+   MOBILE NAVIGATION DRAWER
+   =================================================================== */
+function toggleMobileMenu() {
+  const drawer = document.getElementById('mobileNavDrawer');
+  const icon = document.getElementById('mobileMenuIcon');
+  if (!drawer) return;
+
+  drawer.classList.toggle('open');
+  if (icon) {
+    if (drawer.classList.contains('open')) {
+      icon.className = 'fa-solid fa-xmark';
+    } else {
+      icon.className = 'fa-solid fa-bars';
+    }
+  }
+}
+
+function closeMobileMenu() {
+  const drawer = document.getElementById('mobileNavDrawer');
+  const icon = document.getElementById('mobileMenuIcon');
+  if (drawer) drawer.classList.remove('open');
+  if (icon) icon.className = 'fa-solid fa-bars';
+}
+
+/* ===================================================================
+   NEWS ARTICLES DATA & LOGIC (YANGILIKLAR BO'LIMI)
+   =================================================================== */
+const newsArticlesData = {
+  1: {
+    id: 1,
+    title: "UZMOY 9H Nano-Keramika: Bo'yoqni quyosh va tirnalishlardan 3 yilgacha himoyalash",
+    category: "tech",
+    badgeLabel: "Yangi Texnologiya",
+    badgeClass: "tag-tech",
+    icon: "fa-shield-virus",
+    date: "13-Oktyabr, 2026",
+    readTime: "3 daqiqa",
+    author: "Akmal Karimov (Bosh deteyler)",
+    likes: 89,
+    content: `
+      <p>O'zbekistonning issiq iqlimi avtomobil bo'yoq qatlami (LKP) uchun jiddiy sinovdir: yozgi 45°C gacha bo'lgan jazirama, kuchli quyosh nurlari va qishda yo'llarga sepiladigan xlorid tuzlari lokni 1-2 yil ichida xiralashtirib qo'yadi.</p>
+      
+      <h4>9H Nano-Keramika o'zi nima va u qanday ishlaydi?</h4>
+      <p>9H darajasi qalam qattiqligi shkalasi (Mohs) bo'yicha eng yuqori ko'rsatkichdir. Bu suyuq kvars (SiO2) asosidagi eritma bo'lib, avtomobil lokining mikroskopik g'ovaklariga chuqur singib, uning yuzasida qattiq shisha kristalli himoya qatlamini hosil qiladi.</p>
+      
+      <h4>UZMOY 3 Qatlamli Protsedurasi:</h4>
+      <ul>
+        <li><strong>1-qavat:</strong> Birlamchi nano-primer va yopishqoqlik bog'lovchisi (Base Coat).</li>
+        <li><strong>2-qavat:</strong> 9H qattiqlikdagi kvars kristall qatlami — mayda tirnalishlar va kimyoviy moddalardan qalqon.</li>
+        <li><strong>3-qavat:</strong> Ultra-gidrofob 'Top Coat' — suv va kirlar mashina yuzasida turmay, tomchi shaklida oqib tushadi.</li>
+      </ul>
+
+      <h4>Mijozlarimiz uchun afzalliklari:</h4>
+      <p>Keramika qoplangan avtomobilni yuvish 2 barobar tez va oson bo'ladi, chang yopishmaydi va avtomobil har doim ko'rgazma zalidan endi chiqqandek ko'zni qamashtiruvchi jilo (Mirror Finish) beradi.</p>
+    `
+  },
+  2: {
+    id: 2,
+    title: "Kuzgi Maxsus Taklif: Kompleks Premiumga 20% keshbek va salon ozonatsiyasi BEPUL!",
+    category: "promos",
+    badgeLabel: "Aksiya & Chegirma",
+    badgeClass: "tag-promo",
+    icon: "fa-gift",
+    date: "11-Oktyabr, 2026",
+    readTime: "2 daqiqa",
+    author: "UZMOY Marketing",
+    likes: 144,
+    content: `
+      <p>Avtomobilingizni yangi mavsumga tayyorlash vaqti keldi! UZMOY jamoasi barcha haydovchilar uchun ajoyib kuzgi aksiyani e'lon qiladi.</p>
+
+      <h4>Aksiya shartlari:</h4>
+      <ul>
+        <li>Istalgan filialimizda yoki Sayyor moykada <strong>Kompleks Premium (500 000 so'm)</strong> yoki undan yuqori tarifga buyurtma bering.</li>
+        <li>Har bir buyurtmadan <strong>20% keshbek</strong> darhol to'lov kartangizga yoki hisobingizga qaytariladi!</li>
+        <li>Salonni virus, bakteriya va yoqimsiz hidlardan tozalovchi professional <strong>Ozonatsiya xizmati (qiymati 150 000 so'm) BEPUL</strong> sovg'a qilinadi!</li>
+      </ul>
+
+      <h4>Salon Ozonatsiyasi nima beradi?</h4>
+      <p>Ozon (O3) gazi avtomobil konditsioneri va havo o'tkazgichlarining eng chuqur burchaklarigacha kirib boradi. U mog'or, sigaret hidi, hayvonlar juni va respirator viruslarni 99.9% gacha yo'q qiladi. Ayniqsa yosh bolali oilalar uchun juda foydali!</p>
+    `
+  },
+  3: {
+    id: 3,
+    title: "Toshkent bo'ylab 10 ta yangi sayyor moyka ekipajlari ishga tushirildi",
+    category: "tech",
+    badgeLabel: "Platforma Yangiligi",
+    badgeClass: "tag-platform",
+    icon: "fa-van-shuttle",
+    date: "08-Oktyabr, 2026",
+    readTime: "4 daqiqa",
+    author: "Logistika & Servis",
+    likes: 72,
+    content: `
+      <p>Toshkent shahridagi tirbandliklar vaqtida moykaga borish, navbat kutish va qaytish uchun kamida 2-3 soat vaqt sarflanadi. UZMOY platformasi bu muammoni to'liq hal qilmoqda!</p>
+
+      <h4>Yangi Sayyor Ekipajlar Imkoniyatlari:</h4>
+      <ul>
+        <li><strong>Germaniya Karcher HD texnologiyasi:</strong> Suv bosimi bo'yoqqa ziyon yetkazmasdan barcha kirlarni oson yuvadi.</li>
+        <li><strong>Avtonom toza suv va elektr:</strong> Furgonda 500 litr filtrlangan yumshoq suv va zamonaviy shovqinsiz generator mavjud.</li>
+        <li><strong>Tezkor yetib borish:</strong> Chilonzor, Yunusobod, Mirzo Ulug'bek, Yakkasaroy, Yashnobod va Sergeli hududlariga o'rtacha 15-25 daqiqa ichida yetib kelamiz.</li>
+        <li><strong>Har bir ekipajda 2-3 nafar tajribali usta:</strong> Mashinangiz 40 daqiqa ichida oynadek top-toza holatga keltiriladi.</li>
+      </ul>
+
+      <p>Siz uyda yoki ofisda o'tirib qahva ichasiz, biz esa mashinangizni ko'z oldingizda yuvib beramiz!</p>
+    `
+  },
+  4: {
+    id: 4,
+    title: "Elektromobillar (BYD, Zeekr, Li Auto) parvarishi bo'yicha maxsus deteyling sirlari",
+    category: "tips",
+    badgeLabel: "Avto-Maslahat",
+    badgeClass: "tag-tips",
+    icon: "fa-charging-station",
+    date: "05-Oktyabr, 2026",
+    readTime: "5 daqiqa",
+    author: "EV Detailing Laboratoriyasi",
+    likes: 125,
+    content: `
+      <p>So'nggi yillarda O'zbekiston ko'chalarida BYD, Zeekr, Li Auto, Avatr va boshqa elektromobillar soni keskin ortdi. Oddiy benzinli avtomobillardan farqli o'laroq, elektrokar va gibridlarni yuvishda o'ziga xos ehtiyotkorlik talab etiladi.</p>
+
+      <h4>Elektromobil egalari nimalarni bilishi shart?</h4>
+      <ul>
+        <li><strong>Zaryadlash portlari (GB/T yoki CCS2):</strong> Yuqori bosimli suv oqimini hech qachon to'g'ridan-to'g'ri zaryad lyuki tomon yo'naltirish mumkin emas. UZMOY ustalari portlarni maxsus rezina himoya qoplamalari bilan himoyalaydi.</li>
+        <li><strong>Kameralar va Lidar sensorlari:</strong> 360° ko'rinish beruvchi optik sensorlar qattiq cho'tka bilan artilsa, mikro-tirnalish paydo bo'lib, avtopilot xato ishlay boshlaydi. Biz faqat ultra-yumshoq mikrofibra sochiqlardan foydalanamiz.</li>
+        <li><strong>Dvigatel bo'limi (Kaput osti):</strong> Yuqori voltli to'q sariq (Orange) kabellar va invertorlar mavjud bo'lgani sababli oddiy suv bilan yuvish taqiqlanadi. UZMOY faqat xavfsiz dielektrik quruq bug' va antistatik tozalagichlardan foydalanadi.</li>
+      </ul>
+    `
+  }
+};
+
+function filterNews(category, btnElement) {
+  const buttons = document.querySelectorAll('.news-tab-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  if (btnElement) btnElement.classList.add('active');
+
+  const cards = document.querySelectorAll('.news-card');
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function openNewsModal(articleId) {
+  const article = newsArticlesData[articleId];
+  if (!article) return;
+
+  const contentContainer = document.getElementById('newsModalContent');
+  if (contentContainer) {
+    contentContainer.innerHTML = `
+      <div class="news-modal-header-visual" style="background: linear-gradient(135deg, #091e3a 0%, #173b6c 100%);">
+        <i class="fa-solid ${article.icon}" style="font-size: 70px; color: #00e5ff;"></i>
+      </div>
+      <span class="news-badge-tag ${article.badgeClass}">${article.badgeLabel}</span>
+      <h2 class="news-modal-title">${article.title}</h2>
+      <div class="news-modal-meta">
+        <span><i class="fa-solid fa-calendar"></i> ${article.date}</span>
+        <span><i class="fa-solid fa-clock"></i> ${article.readTime}</span>
+        <span><i class="fa-solid fa-user-pen"></i> ${article.author}</span>
+      </div>
+      <div class="news-modal-content">
+        ${article.content}
+      </div>
+      <div class="news-reaction-bar">
+        <button class="reaction-btn" id="newsLikeBtn" onclick="likeArticle(${article.id})">
+          <i class="fa-solid fa-heart"></i> Yoqdi (<span id="likesCountDisplay">${article.likes}</span>)
+        </button>
+        <button class="reaction-btn" onclick="copyArticleLink()">
+          <i class="fa-solid fa-share-nodes"></i> Ulashish
+        </button>
+        <button class="btn btn-sm btn-primary" onclick="closeNewsModal(); document.getElementById('booking-section').scrollIntoView({behavior: 'smooth'})" style="margin-left: auto;">
+          <i class="fa-solid fa-bolt"></i> Shu xizmatga yozilish
+        </button>
+      </div>
+    `;
+  }
+
+  const modal = document.getElementById('newsModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeNewsModal() {
+  const modal = document.getElementById('newsModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function likeArticle(id) {
+  const article = newsArticlesData[id];
+  const btn = document.getElementById('newsLikeBtn');
+  const counter = document.getElementById('likesCountDisplay');
+  if (!article || !btn) return;
+
+  if (btn.classList.contains('liked')) {
+    article.likes--;
+    btn.classList.remove('liked');
+  } else {
+    article.likes++;
+    btn.classList.add('liked');
+    showToast("Maqola sizga ma'qul keldi! ❤️", "success");
+  }
+  if (counter) counter.textContent = article.likes;
+}
+
+function copyArticleLink() {
+  navigator.clipboard?.writeText(window.location.href);
+  showToast("Maqola havolasi nusxalandi!", "success");
+}
+
+/* ===================================================================
+   CUSTOMER REVIEWS LOGIC (MIJOZLAR FIKRLARI)
+   =================================================================== */
+let currentReviewRating = 5;
+
+function openReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function setRating(val) {
+  currentReviewRating = val;
+  const stars = document.querySelectorAll('#starRatingSelect i');
+  stars.forEach((star, idx) => {
+    if (idx < val) {
+      star.classList.add('active');
+      star.style.color = '#f59e0b';
+    } else {
+      star.classList.remove('active');
+      star.style.color = '#64748b';
+    }
+  });
+}
+
+function handleReviewSubmit(event) {
+  event.preventDefault();
+
+  const name = document.getElementById('revNameInput')?.value || 'Mijoz';
+  const car = document.getElementById('revCarInput')?.value || 'Avtomobil';
+  const text = document.getElementById('revTextInput')?.value || 'Ajoyib servis!';
+
+  // Initials
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'MZ';
+
+  const reviewsGrid = document.getElementById('reviewsGrid');
+  if (reviewsGrid) {
+    const newCard = document.createElement('div');
+    newCard.className = 'review-card';
+    newCard.style.borderColor = '#00e5ff';
+    newCard.innerHTML = `
+      <div class="review-card-top">
+        <div class="reviewer-meta">
+          <div class="reviewer-avatar" style="background: rgba(0, 229, 255, 0.2);">${initials}</div>
+          <div>
+            <div class="reviewer-name">${name}</div>
+            <div class="reviewer-car">${car}</div>
+          </div>
+        </div>
+        <span class="review-verified"><i class="fa-solid fa-shield-check"></i> Yangi fikr</span>
+      </div>
+      <div class="review-stars">
+        ${'<i class="fa-solid fa-star"></i>'.repeat(currentReviewRating)}
+      </div>
+      <p class="review-text">"${text}"</p>
+      <span class="review-service-badge"><i class="fa-solid fa-circle-check"></i> Tasdiqlangan mijoz</span>
+    `;
+    reviewsGrid.prepend(newCard);
+  }
+
+  closeReviewModal();
+  showToast("Fikringiz muvaffaqiyatli qabul qilindi! Rahmat!", "success");
+
+  // Reset fields
+  document.getElementById('revNameInput').value = '';
+  document.getElementById('revCarInput').value = '';
+  document.getElementById('revTextInput').value = '';
+}
+
+/* ===================================================================
+   FAQ ACCORDION
+   =================================================================== */
+function toggleFaq(questionElement) {
+  const item = questionElement.closest('.faq-item');
+  if (!item) return;
+
+  const isActive = item.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+  if (!isActive) {
+    item.classList.add('active');
+  }
+}
+
+/* ===================================================================
+   BRANCHES & PLAN COMPARISON MODALS
+   =================================================================== */
+function openBranchesModal() {
+  const modal = document.getElementById('branchesModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeBranchesModal() {
+  const modal = document.getElementById('branchesModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function selectStationBranch(branchKey) {
+  toggleServiceMode('station');
+  const select = document.getElementById('branchSelect');
+  if (select) {
+    select.value = branchKey;
+    handleBranchChange();
+  }
+  document.getElementById('booking-section').scrollIntoView({ behavior: 'smooth' });
+  showToast(`Filial tanlandi: ${branchesData[branchKey]?.name || branchKey}`, "success");
+}
+
+function openPlanComparisonModal() {
+  const modal = document.getElementById('compareModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closePlanComparisonModal() {
+  const modal = document.getElementById('compareModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function openContactModal() {
+  const modal = document.getElementById('contactModal');
+  if (modal) modal.classList.add('active');
+}
+
+function closeContactModal() {
+  const modal = document.getElementById('contactModal');
+  if (modal) modal.classList.remove('active');
+}
+
+/* ===================================================================
+   PRESET ADDRESSES & FOCUS
+   =================================================================== */
+function setPresetAddress(addressText, lat, lng) {
+  const input = document.getElementById('userAddressInput');
+  if (input) input.value = addressText;
+
+  updateLocationFromCoords(lat, lng);
+  if (leafletMap && userMarker) {
+    leafletMap.setView([lat, lng], 15);
+    userMarker.setLatLng([lat, lng]);
+  }
+  showToast(`Manzil tanlandi: ${addressText}`, "info");
+}
+
+function focusPlateInput() {
+  const booking = document.getElementById('booking-section');
+  if (booking) booking.scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    const input = document.getElementById('plateSeriesInput');
+    if (input) {
+      input.focus();
+      input.style.borderColor = '#00e5ff';
+      setTimeout(() => input.style.borderColor = '', 1500);
+    }
+  }, 400);
+}
+
+/* ===================================================================
+   TOAST NOTIFICATION HELPER
+   =================================================================== */
+let toastTimeout = null;
+
+function showToast(message, type = 'info') {
+  const toast = document.getElementById('uzmoyToast');
+  const msgEl = document.getElementById('toastMessage');
+  const iconEl = document.getElementById('toastIcon');
+
+  if (!toast || !msgEl) return;
+
+  msgEl.textContent = message;
+  if (iconEl) {
+    if (type === 'success') {
+      iconEl.className = 'fa-solid fa-circle-check text-green';
+    } else if (type === 'info') {
+      iconEl.className = 'fa-solid fa-circle-info text-cyan';
+    } else {
+      iconEl.className = 'fa-solid fa-bell text-gold';
+    }
+  }
+
+  toast.classList.add('show');
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
+
