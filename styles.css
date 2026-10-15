@@ -3210,69 +3210,415 @@ body {
 }
 
 /* ===================================================================
-   RESPONSIVE DESIGN (Tablets & Mobile)
+   RESPONSIVE DESIGN (Tablets, Smartphones & Mobile App WebView)
    =================================================================== */
+
+/* Tablet & Smaller Desktops */
 @media (max-width: 1024px) {
   .hero-section {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 36px;
   }
   .booking-layout {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
   .queue-monitor-panel {
     position: static;
   }
   .footer-container {
     grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
 }
 
+/* Tablets & Mobile Landscape (< 768px) */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 32px;
+  .site-header {
+    padding: 10px 0;
   }
-  .quick-stats-grid {
-    grid-template-columns: 1fr;
+
+  .header-container {
+    padding: 0 16px;
+    gap: 12px;
   }
+
   .main-nav {
     display: none;
   }
+
   .mobile-menu-btn {
     display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
   }
+
+  /* Header actions on mobile */
+  .header-actions {
+    gap: 8px;
+  }
+
+  #quickBookBtn {
+    display: none; /* Accessible inside mobile drawer & hero section */
+  }
+
   .theme-switcher-pill:not(.drawer-pill) .theme-btn span {
     display: none;
   }
+
   .theme-switcher-pill:not(.drawer-pill) .theme-btn {
-    padding: 6px 9px;
+    padding: 6px 10px;
+    font-size: 13px;
   }
-  .theme-toggle-btn .theme-text {
-    display: none;
+
+  /* Hero Section */
+  .hero-section {
+    padding: 24px 0 36px;
+    gap: 28px;
   }
-  .theme-toggle-btn {
-    padding: 8px 10px;
+
+  .hero-title {
+    font-size: 28px;
+    line-height: 1.25;
   }
-  .form-fields-grid {
+
+  .hero-subtitle {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .quick-stats-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
   }
-  .service-mode-selector {
-    grid-template-columns: 1fr;
+
+  .stat-card {
+    padding: 12px 16px;
   }
-  .queue-choice-cards {
-    grid-template-columns: 1fr;
+
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
   }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 15px;
+  }
+
+  /* Services / Pricing Grid */
   .pricing-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
+
+  .pricing-card {
+    padding: 24px 20px;
+  }
+
+  /* Booking & Queue */
+  .form-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .service-mode-selector {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .queue-choice-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .car-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .payment-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .preset-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  /* News Section */
+  .news-filters {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .news-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .news-tab-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
   .news-grid {
     grid-template-columns: 1fr;
+    gap: 22px;
   }
+
+  /* Reviews Section */
+  .reviews-header-wrap {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    text-align: center;
+  }
+
   .reviews-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
+
+  /* Modals */
+  .modal-card {
+    width: 94%;
+    max-width: 94%;
+    margin: 16px auto;
+    padding: 24px 18px;
+    max-height: 90vh;
+  }
+
+  .branches-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 10px 0;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compare-table {
+    min-width: 580px;
+  }
+
+  /* Footer */
   .footer-container {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* Smartphones & Mobile App (< 480px) */
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    gap: 8px;
+  }
+
+  .logo-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .logo-icon {
+    font-size: 17px;
+  }
+
+  .logo-title {
+    font-size: 19px;
+  }
+
+  .logo-tagline {
+    display: none; /* Hide secondary tagline on compact screens to prevent overflow */
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .live-status-pill {
+    padding: 6px 10px;
+    font-size: 11.5px;
+    gap: 6px;
+  }
+
+  .live-status-pill .pill-arrow {
+    display: none;
+  }
+
+  .live-status-pill .status-text {
+    font-size: 11.5px;
+  }
+
+  .theme-switcher-pill:not(.drawer-pill) {
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .theme-switcher-pill:not(.drawer-pill) .theme-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .mobile-menu-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .badge-hero {
+    font-size: 10.5px;
+    padding: 5px 10px;
+  }
+
+  .hero-preview-card {
+    padding: 16px 12px;
+  }
+
+  .uzb-plate.mini-plate {
+    transform: scale(0.88);
+    margin: 4px auto;
+  }
+
+  /* Booking components */
+  .car-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .car-type-card {
+    padding: 12px 6px;
+  }
+
+  .car-type-card i {
+    font-size: 22px;
+  }
+
+  .car-name {
+    font-size: 12px;
+  }
+
+  .car-multiplier {
+    font-size: 10.5px;
+  }
+
+  .payment-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .pay-method-box {
+    padding: 12px 6px;
+  }
+
+  .pay-logo {
+    font-size: 12.5px;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 22px;
+  }
+
+  .section-subtitle {
+    font-size: 13px;
+  }
+
+  /* Modals */
+  .modal-card {
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+
+  .news-modal-title {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .news-modal-meta {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .receipt-paper {
+    padding: 14px 10px;
+    font-size: 12px;
+  }
+
+  .receipt-row {
+    font-size: 12px;
+  }
+
+  .uzmoy-toast {
+    left: 12px;
+    right: 12px;
+    transform: translateY(100px);
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+
+  .uzmoy-toast.show {
+    transform: translateY(0);
+  }
+}
+
+/* Extra Compact Phones (< 360px) */
+@media (max-width: 360px) {
+  .header-container {
+    padding: 0 8px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+  }
+
+  .car-types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-switcher-pill:not(.drawer-pill) .theme-btn {
+    padding: 4px 6px;
+    font-size: 11px;
   }
 }
 
