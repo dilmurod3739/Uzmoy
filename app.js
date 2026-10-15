@@ -737,21 +737,52 @@ function startQueueSimulation() {
   }, 4000);
 }
 
-// Register Service Worker for Android PWA installation
+// Register Service Worker for Android PWA / Offline support with auto-update
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then((reg) => console.log('UZMOY Service Worker registered successfully', reg.scope))
+    navigator.serviceWorker.register('./sw.js?v=2.2')
+      .then((reg) => {
+        console.log('[UZMOY] Service Worker muvaffaqiyatli ro\'yxatga olindi:', reg.scope);
+        // Yangi versiyani tekshirish
+        reg.update();
+        reg.onupdatefound = () => {
+          const installingWorker = reg.installing;
+          if (installingWorker) {
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                showToast("UZMOY yangilandi! Eng so'nggi versiya faollashdi 🚀", "success");
+              }
+            };
+          }
+        };
+      })
       .catch((err) => console.warn('Service Worker registration skipped:', err));
   });
 }
 
+// Global keshni tozalash va majburiy yangilash yordamchisi
+window.forceRefreshApp = function() {
+  if ('caches' in window) {
+    caches.keys().then((names) => {
+      return Promise.all(names.map((name) => caches.delete(name)));
+    }).then(() => {
+      window.location.reload(true);
+    });
+  } else {
+    window.location.reload(true);
+  }
+};
+
 /* ===================================================================
-   THEME TOGGLE MANAGEMENT (TUNGI VA KUNDUZGI REJIM)
+   THEME SWITCHER MANAGEMENT (TUNGI VA KUNDUZGI REJIM)
    =================================================================== */
 function initTheme() {
   const savedTheme = localStorage.getItem('uzmoy_theme') || 'dark';
   applyTheme(savedTheme, false);
+}
+
+function setTheme(theme, showNotification = true) {
+  applyTheme(theme, showNotification);
 }
 
 function toggleTheme() {
@@ -761,25 +792,47 @@ function toggleTheme() {
 }
 
 function applyTheme(theme, showNotification = true) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('uzmoy_theme', theme);
+  const activeTheme = (theme === 'light') ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', activeTheme);
+  localStorage.setItem('uzmoy_theme', activeTheme);
 
+  // Segmented Switcher tugmalarini faollashtirish (Desktop va Mobil)
+  const lightBtns = document.querySelectorAll('.theme-light-btn');
+  const darkBtns = document.querySelectorAll('.theme-dark-btn');
   const themeIcon = document.getElementById('themeIcon');
   const themeText = document.getElementById('themeText');
 
-  if (theme === 'light') {
+  if (activeTheme === 'light') {
+    lightBtns.forEach((btn) => btn.classList.add('active'));
+    darkBtns.forEach((btn) => btn.classList.remove('active'));
+
+    // Fallback yakka tugma uchun
     if (themeIcon) {
       themeIcon.className = 'fa-solid fa-sun';
       themeIcon.style.color = '#f59e0b';
     }
     if (themeText) themeText.textContent = 'Kunduzgi rejim';
+
+    // Mobil brauzer status bari rangi
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) metaThemeColor.setAttribute('content', '#ffffff');
+
     if (showNotification) showToast("Kunduzgi rejim yoqildi ☀️", "info");
   } else {
+    lightBtns.forEach((btn) => btn.classList.remove('active'));
+    darkBtns.forEach((btn) => btn.classList.add('active'));
+
+    // Fallback yakka tugma uchun
     if (themeIcon) {
       themeIcon.className = 'fa-solid fa-moon';
       themeIcon.style.color = '#00e5ff';
     }
     if (themeText) themeText.textContent = 'Tungi rejim';
+
+    // Mobil brauzer status bari rangi
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) metaThemeColor.setAttribute('content', '#07090e');
+
     if (showNotification) showToast("Tungi rejim yoqildi 🌙", "info");
   }
 }
