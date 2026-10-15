@@ -7,6 +7,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build APK
@@ -22,8 +25,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
 
       - name: Prepare Web Assets in Android Project
         run: |
@@ -33,20 +37,18 @@ jobs:
           cp app.js android/app/src/main/assets/
           cp manifest.json android/app/src/main/assets/
           cp sw.js android/app/src/main/assets/ || true
+          cp icon-192.png android/app/src/main/assets/ || true
+          cp icon-512.png android/app/src/main/assets/ || true
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.4'
 
       - name: Build Android APK with Gradle
         run: |
           cd android
-          gradle wrapper || true
-          if [ -f "./gradlew" ]; then
-            chmod +x ./gradlew
-            ./gradlew assembleDebug --stacktrace
-          else
-            gradle assembleDebug --stacktrace
-          fi
+          gradle assembleDebug --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -54,3 +56,19 @@ jobs:
           name: UZMOY-App-Debug-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
+
+      - name: Create or Update GitHub Release with APK
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: latest
+          name: "UZMOY Mobil Ilovasi (Android APK)"
+          body: |
+            ### 🚗 UZMOY — Oliy Toifali Avtomoyka va Detailing Platformasi
+            Eng so'nggi yangilangan Android ilovasi (.apk).
+            
+            - **Versiya:** 2.3.0
+            - **To'liq moslashuv:** Smartfonlar, planshetlar va Android WebView
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
