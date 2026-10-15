@@ -227,7 +227,7 @@
 }
 
 /* Base Styles */
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -239,11 +239,16 @@ html {
   background-color: var(--bg-dark);
   color: var(--text-main);
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 body {
   position: relative;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   line-height: 1.6;
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.04) 0%, transparent 40%),
@@ -855,10 +860,12 @@ body {
 /* Sections Common */
 .section {
   max-width: 1320px;
+  width: 100%;
   margin: 80px auto;
   padding: 0 24px;
   position: relative;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .section-header {
@@ -3210,6 +3217,7 @@ body {
 }
 
 /* ===================================================================
+/* ===================================================================
    RESPONSIVE DESIGN (Tablets, Smartphones & Mobile App WebView)
    =================================================================== */
 
@@ -3234,121 +3242,246 @@ body {
 
 /* Tablets & Mobile Landscape (< 768px) */
 @media (max-width: 768px) {
+  /* Prevent background glow blobs from causing horizontal scroll */
+  .ambient-glow {
+    display: none !important;
+  }
+
+  /* Buttons mobile behavior */
+  .btn {
+    white-space: normal !important;
+    word-break: normal;
+    text-align: center;
+  }
+
+  .btn-xl {
+    padding: 14px 18px !important;
+    font-size: 15px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* Header mobile compaction */
   .site-header {
-    padding: 10px 0;
+    padding: 8px 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
   }
 
   .header-container {
-    padding: 0 16px;
-    gap: 12px;
+    padding: 0 10px;
+    gap: 6px;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
 
   .main-nav {
     display: none;
   }
 
-  .mobile-menu-btn {
-    display: flex;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-sm);
+  .brand-logo {
+    gap: 7px;
+    min-width: 0;
+    flex-shrink: 1;
   }
 
-  /* Header actions on mobile */
+  .logo-icon-wrap {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    font-size: 16px;
+  }
+
+  .logo-title {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .logo-tagline {
+    display: none !important; /* Hide secondary tagline to avoid pushing header */
+  }
+
   .header-actions {
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
   }
 
   #quickBookBtn {
-    display: none; /* Accessible inside mobile drawer & hero section */
+    display: none !important; /* Kept inside mobile drawer & hero section */
   }
 
-  .theme-switcher-pill:not(.drawer-pill) .theme-btn span {
-    display: none;
+  /* Compact Theme Switcher (Icons only) */
+  .theme-switcher-pill:not(.drawer-pill) {
+    padding: 2px;
+    gap: 2px;
+    flex-shrink: 0;
   }
 
   .theme-switcher-pill:not(.drawer-pill) .theme-btn {
-    padding: 6px 10px;
-    font-size: 13px;
+    padding: 5px 7px;
+    font-size: 12px;
+    gap: 0;
   }
 
-  /* Hero Section */
+  .theme-switcher-pill:not(.drawer-pill) .theme-btn span {
+    display: none !important;
+  }
+
+  /* Compact Live Status Pill (● 24/7) */
+  .live-status-pill {
+    padding: 5px 8px;
+    font-size: 11px;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .live-status-pill .pill-arrow {
+    display: none !important;
+  }
+
+  .live-status-pill .status-text {
+    font-size: 11px;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  /* Sections container constraints */
+  .section {
+    margin: 36px auto;
+    padding: 0 12px;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
   .hero-section {
-    padding: 24px 0 36px;
-    gap: 28px;
+    margin: 16px auto 32px;
+    padding: 0 12px;
+    gap: 24px;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .hero-title {
-    font-size: 28px;
+    font-size: 26px;
     line-height: 1.25;
   }
 
   .hero-subtitle {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin-bottom: 18px;
   }
 
   .quick-stats-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 
   .stat-card {
-    padding: 12px 16px;
+    padding: 10px 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-cta-group {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 10px;
+    gap: 8px;
   }
 
   .hero-cta-group .btn {
     width: 100%;
     justify-content: center;
-    padding: 13px 20px;
-    font-size: 15px;
+    padding: 12px 18px;
+    font-size: 14.5px;
   }
 
-  /* Services / Pricing Grid */
+  .hero-preview-card {
+    padding: 16px 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Pricing / Services Grid */
   .pricing-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
+    width: 100%;
   }
 
   .pricing-card {
-    padding: 24px 20px;
+    padding: 20px 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Booking & Queue */
+  /* Booking Form Card & Panels */
+  .booking-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .booking-form-card {
+    padding: 16px 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+  }
+
+  .form-step-block {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+
   .form-fields-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 
   .service-mode-selector {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .queue-choice-cards {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .car-types-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
 
-  .payment-grid {
+  .payment-methods-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
 
   .preset-chips {
@@ -3358,8 +3491,94 @@ body {
   }
 
   .chip-btn {
-    font-size: 12px;
+    font-size: 11.5px;
     padding: 6px 10px;
+  }
+
+  /* Full license plate preview responsive sizing */
+  .uzb-plate.full-plate {
+    height: 52px;
+    padding: 0 10px;
+    gap: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .full-plate .plate-code {
+    font-size: 20px;
+  }
+
+  .full-plate .plate-number {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Order Summary Box — Native Mobile Receipt Layout */
+  .order-summary-box {
+    padding: 14px 12px !important;
+    margin: 18px 0 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+  }
+
+  .summary-line {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .summary-line span {
+    color: var(--text-dim);
+    font-size: 11.5px;
+  }
+
+  .summary-line strong {
+    font-size: 13.5px;
+    color: var(--text-main);
+    text-align: left;
+    word-break: break-word;
+    width: 100%;
+  }
+
+  .summary-total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .summary-total-line span {
+    font-size: 15px;
+  }
+
+  .total-price-amount {
+    font-size: 26px;
+  }
+
+  .total-price-unit {
+    font-size: 13px;
+  }
+
+  /* Queue Monitor Panel */
+  .queue-monitor-panel {
+    padding: 16px 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden;
+  }
+
+  .qi-details {
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   /* News Section */
@@ -3367,7 +3586,7 @@ body {
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -3379,246 +3598,184 @@ body {
   .news-tab-btn {
     flex-shrink: 0;
     white-space: nowrap;
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 7px 14px;
+    font-size: 12.5px;
   }
 
   .news-grid {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 18px;
+    width: 100%;
   }
 
   /* Reviews Section */
   .reviews-header-wrap {
     flex-direction: column;
     align-items: stretch;
-    gap: 14px;
+    gap: 12px;
     text-align: center;
   }
 
   .reviews-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
+    width: 100%;
   }
 
   /* Modals */
   .modal-card {
-    width: 94%;
-    max-width: 94%;
-    margin: 16px auto;
-    padding: 24px 18px;
-    max-height: 90vh;
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 14px auto !important;
+    padding: 20px 14px !important;
+    max-height: 88vh;
+    box-sizing: border-box;
   }
 
   .branches-modal-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 10px 0;
+    gap: 12px;
+    padding: 8px 0;
   }
 
   .table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
   }
 
   .compare-table {
-    min-width: 580px;
+    min-width: 520px;
   }
 
   /* Footer */
   .footer-container {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
+    padding: 0 14px;
   }
 }
 
-/* Smartphones & Mobile App (< 480px) */
+/* Compact Smartphones (< 480px) */
 @media (max-width: 480px) {
   .header-container {
-    padding: 0 12px;
-    gap: 8px;
-  }
-
-  .brand-logo {
-    gap: 8px;
-  }
-
-  .logo-icon-wrap {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-  }
-
-  .logo-icon {
-    font-size: 17px;
+    padding: 0 8px;
+    gap: 5px;
   }
 
   .logo-title {
-    font-size: 19px;
+    font-size: 17px;
   }
 
-  .logo-tagline {
-    display: none; /* Hide secondary tagline on compact screens to prevent overflow */
+  .logo-icon-wrap {
+    width: 32px;
+    height: 32px;
   }
 
-  .header-actions {
-    gap: 6px;
+  .logo-icon {
+    font-size: 15px;
   }
 
   .live-status-pill {
-    padding: 6px 10px;
-    font-size: 11.5px;
-    gap: 6px;
-  }
-
-  .live-status-pill .pill-arrow {
-    display: none;
+    padding: 5px 7px;
+    font-size: 11px;
   }
 
   .live-status-pill .status-text {
-    font-size: 11.5px;
+    font-size: 10.5px;
   }
 
-  .theme-switcher-pill:not(.drawer-pill) {
-    padding: 2px;
-    gap: 2px;
-  }
-
-  .theme-switcher-pill:not(.drawer-pill) .theme-btn {
-    padding: 5px 8px;
-    font-size: 12px;
-  }
-
-  .mobile-menu-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  /* Hero */
   .hero-title {
-    font-size: 23px;
+    font-size: 22px;
     line-height: 1.25;
   }
 
   .badge-hero {
-    font-size: 10.5px;
-    padding: 5px 10px;
+    font-size: 10px;
+    padding: 4px 8px;
   }
 
-  .hero-preview-card {
-    padding: 16px 12px;
-  }
-
-  .uzb-plate.mini-plate {
-    transform: scale(0.88);
-    margin: 4px auto;
-  }
-
-  /* Booking components */
-  .car-types-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .car-type-card {
-    padding: 12px 6px;
-  }
-
-  .car-type-card i {
-    font-size: 22px;
-  }
-
-  .car-name {
-    font-size: 12px;
-  }
-
-  .car-multiplier {
-    font-size: 10.5px;
-  }
-
-  .payment-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .pay-method-box {
-    padding: 12px 6px;
-  }
-
-  .pay-logo {
-    font-size: 12.5px;
-  }
-
-  /* Section Titles */
   .section-title {
-    font-size: 22px;
+    font-size: 21px;
   }
 
   .section-subtitle {
-    font-size: 13px;
+    font-size: 12.5px;
   }
 
-  /* Modals */
-  .modal-card {
-    padding: 18px 12px;
-    border-radius: 14px;
+  .car-types-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
   }
 
-  .news-modal-title {
-    font-size: 18px;
-    line-height: 1.35;
+  .car-type-card {
+    padding: 10px 5px;
   }
 
-  .news-modal-meta {
-    flex-wrap: wrap;
-    gap: 8px;
-    font-size: 12px;
+  .car-type-card i {
+    font-size: 20px;
+  }
+
+  .car-name {
+    font-size: 11.5px;
+  }
+
+  .payment-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .pay-method-box {
+    padding: 10px 5px;
+  }
+
+  .pay-logo-badge {
+    font-size: 11.5px;
   }
 
   .receipt-paper {
-    padding: 14px 10px;
-    font-size: 12px;
-  }
-
-  .receipt-row {
-    font-size: 12px;
+    padding: 12px 8px;
+    font-size: 11.5px;
   }
 
   .uzmoy-toast {
-    left: 12px;
-    right: 12px;
-    transform: translateY(100px);
-    font-size: 13px;
-    padding: 12px 16px;
-  }
-
-  .uzmoy-toast.show {
-    transform: translateY(0);
+    left: 8px;
+    right: 8px;
+    font-size: 12.5px;
+    padding: 10px 14px;
   }
 }
 
 /* Extra Compact Phones (< 360px) */
 @media (max-width: 360px) {
   .header-container {
-    padding: 0 8px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .live-status-pill .status-text {
+    display: none !important; /* Only pulsing beacon on extreme narrow screens */
+  }
+
+  .live-status-pill {
+    padding: 6px 7px;
   }
 
   .hero-title {
-    font-size: 20px;
+    font-size: 19px;
   }
 
   .car-types-grid {
     grid-template-columns: 1fr;
   }
 
-  .payment-grid {
+  .payment-methods-grid {
     grid-template-columns: 1fr;
   }
 
   .theme-switcher-pill:not(.drawer-pill) .theme-btn {
-    padding: 4px 6px;
-    font-size: 11px;
+    padding: 4px 5px;
+    font-size: 10.5px;
   }
 }
 

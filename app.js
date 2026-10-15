@@ -740,7 +740,7 @@ function startQueueSimulation() {
 // Register Service Worker for Android PWA / Offline support with auto-update
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js?v=2.2')
+    navigator.serviceWorker.register('./sw.js?v=2.3')
       .then((reg) => {
         console.log('[UZMOY] Service Worker muvaffaqiyatli ro\'yxatga olindi:', reg.scope);
         // Yangi versiyani tekshirish

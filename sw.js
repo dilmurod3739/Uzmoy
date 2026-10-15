@@ -1,5 +1,5 @@
-// UZMOY Service Worker for Android PWA / Offline support (v2.2)
-const CACHE_NAME = 'uzmoy-cache-v2';
+// UZMOY Service Worker for Android PWA / Offline support (v2.3)
+const CACHE_NAME = 'uzmoy-cache-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
