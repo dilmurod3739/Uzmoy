@@ -24,9 +24,57 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <link rel="stylesheet" href="styles.css?v=2.3">
+  <link rel="stylesheet" href="styles.css?v=2.4">
 </head>
 <body>
+  <!-- ==========================================
+       LUXURY ENTRANCE ANIMATION (SPLASH SCREEN)
+       ========================================== -->
+  <div id="appSplashScreen" class="app-splash-screen" role="dialog" aria-modal="true" aria-label="UZMOY Ilovasi Yuklanmoqda">
+    <div class="splash-backdrop">
+      <div class="splash-orb splash-orb-1"></div>
+      <div class="splash-orb splash-orb-2"></div>
+      <div class="splash-grid-lines"></div>
+    </div>
+
+    <div class="splash-content">
+      <!-- Animated Brand Badge -->
+      <div class="splash-brand-badge">
+        <div class="splash-glow-ring"></div>
+        <div class="splash-ring-rotator"></div>
+        <div class="splash-ring-pulse"></div>
+        <div class="splash-icon-box">
+          <i class="fa-solid fa-droplet splash-icon"></i>
+          <span class="splash-droplet-shine"></span>
+        </div>
+      </div>
+
+      <!-- Brand Typography -->
+      <div class="splash-brand-info">
+        <h1 class="splash-title">UZ<span>MOY</span></h1>
+        <div class="splash-badge-pill">
+          <i class="fa-solid fa-sparkles"></i> SMART CAR WASH &amp; DETAILING
+        </div>
+      </div>
+
+      <!-- Modern Progress Bar -->
+      <div class="splash-progress-wrapper">
+        <div class="splash-progress-track">
+          <div class="splash-progress-bar" id="splashProgressBar"></div>
+        </div>
+        <div class="splash-status-row">
+          <span class="splash-status-label" id="splashStatusText">Tizim ishga tushirilmoqda...</span>
+          <span class="splash-percentage" id="splashPercentage">0%</span>
+        </div>
+      </div>
+
+      <!-- Skip Button -->
+      <button type="button" class="splash-skip-btn" id="splashSkipBtn" onclick="dismissSplashScreen()">
+        O'tkazib yuborish <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- Ambient background glow elements -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
@@ -42,7 +90,7 @@
         </div>
         <div class="logo-text">
           <span class="logo-title">UZ<span>MOY</span></span>
-          <span class="logo-tagline">SMART CAR WASH & DETAILING</span>
+          <span class="logo-tagline">SMART CAR WASH &amp; DETAILING</span>
         </div>
       </div>
 
@@ -57,6 +105,11 @@
       </nav>
 
       <div class="header-actions">
+        <!-- APK Download Button -->
+        <a href="https://github.com/dilmurod3739/Uzmoy/releases/latest/download/app-debug.apk" class="btn btn-outline btn-sm apk-header-btn" title="Android ilovani (.apk) yuklab olish" download>
+          <i class="fa-brands fa-android text-green"></i> <span>APK</span>
+        </a>
+
         <!-- Tungi / Kunduzgi Rejim Segmented Switcher -->
         <div class="theme-switcher-pill" id="themeSwitcher" role="radiogroup" aria-label="Mavzu rejimi">
           <button type="button" class="theme-btn theme-light-btn" id="themeLightBtn" onclick="setTheme('light')" title="Kunduzgi yorug' rejim">
@@ -116,6 +169,9 @@
       <button class="btn btn-outline btn-sm" onclick="openBranchesModal()">
         <i class="fa-solid fa-shop"></i> Filiallar
       </button>
+      <a href="https://github.com/dilmurod3739/Uzmoy/releases/latest/download/app-debug.apk" class="btn btn-outline btn-sm btn-block" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4); text-decoration: none;" download>
+        <i class="fa-brands fa-android"></i> Android Ilovani (.apk) yuklab olish
+      </a>
     </div>
   </div>
 
@@ -1659,6 +1715,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   
   <!-- Main Application Script -->
-  <script src="app.js?v=2.3"></script>
+  <script src="app.js?v=2.4"></script>
 </body>
 </html>

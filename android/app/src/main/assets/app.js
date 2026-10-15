@@ -1238,3 +1238,89 @@ function showToast(message, type = 'info') {
   }, 3500);
 }
 
+/* ===================================================================
+   LUXURY ENTRANCE ANIMATION (SPLASH SCREEN CONTROLLER)
+   =================================================================== */
+function initSplashScreen() {
+  const splash = document.getElementById('appSplashScreen');
+  const bar = document.getElementById('splashProgressBar');
+  const percentText = document.getElementById('splashPercentage');
+  const statusText = document.getElementById('splashStatusText');
+
+  if (!splash) return;
+
+  // Lock scroll while splash is active
+  document.body.classList.add('splash-active');
+
+  const milestones = [
+    { target: 28, duration: 280, text: 'Xizmatlar va tariflar yuklanmoqda...' },
+    { target: 65, duration: 380, text: 'Jonli navbat va filiallar ulanmoqda...' },
+    { target: 92, duration: 320, text: 'GPS va sayyor guruhlar tayyorlanmoqda...' },
+    { target: 100, duration: 220, text: 'Xush kelibsiz!' }
+  ];
+
+  let currentPercent = 0;
+  let milestoneIndex = 0;
+
+  function advanceProgress() {
+    if (milestoneIndex >= milestones.length) {
+      setTimeout(dismissSplashScreen, 280);
+      return;
+    }
+
+    const { target, duration, text } = milestones[milestoneIndex];
+    if (statusText) statusText.textContent = text;
+
+    const start = currentPercent;
+    const startTime = performance.now();
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const progressRatio = Math.min(elapsed / duration, 1);
+      // easeOutCubic curve
+      const ease = 1 - Math.pow(1 - progressRatio, 3);
+      currentPercent = Math.round(start + (target - start) * ease);
+
+      if (bar) bar.style.width = currentPercent + '%';
+      if (percentText) percentText.textContent = currentPercent + '%';
+
+      if (progressRatio < 1) {
+        requestAnimationFrame(step);
+      } else {
+        milestoneIndex++;
+        advanceProgress();
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  // Trigger progress after frame
+  setTimeout(advanceProgress, 100);
+
+  // Hard timeout guarantee (2.2s max)
+  setTimeout(dismissSplashScreen, 2200);
+}
+
+function dismissSplashScreen() {
+  const splash = document.getElementById('appSplashScreen');
+  if (!splash || splash.classList.contains('splash-dismissed')) return;
+
+  splash.classList.add('splash-dismissed');
+  document.body.classList.remove('splash-active');
+
+  setTimeout(() => {
+    if (splash && splash.parentNode) {
+      splash.parentNode.removeChild(splash);
+    }
+  }, 650);
+}
+
+// Auto-run splash screen on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSplashScreen);
+} else {
+  initSplashScreen();
+}
+
+
